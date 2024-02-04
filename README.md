@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Currency exchange rate monitoring application based on [NBP Web API](https://api.nbp.pl/en.html#info).
 
 ## Available Scripts
 

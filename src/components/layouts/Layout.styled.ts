@@ -8,7 +8,7 @@ const S = {
         flex-direction: column;
         box-sizing: border-box;
         min-height: 100svh;
-        background: ${({ theme }) => theme.light.colors.typo.medium};
+        background: ${({ theme }) => theme.light.colors.typo.lower};
         padding-bottom: 40px;
         padding-right: 16px;
     `,

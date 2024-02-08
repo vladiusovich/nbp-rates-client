@@ -1,4 +1,5 @@
 export interface ColorPaletteType {
+    highest: string;
     higher: string;
     high: string;
     medium: string;

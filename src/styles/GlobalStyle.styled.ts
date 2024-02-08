@@ -1,19 +1,27 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+const GlobalStyles = createGlobalStyle`
+    body {
+        font-family: 'Public Sans', sans-serif;
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 140%;
+        font-style: normal;
 
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
+        /* need for modal portal for detect scroll */
+        max-height: 100vh;
+        min-width: 320px;
+
+        text-underline-offset: 4px;
+
+        @supports not selector(::-webkit-scrollbar) {
+            scrollbar-width: initial !important;
+        }
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
 `;
 
-export default GlobalStyle;
+export default GlobalStyles;

@@ -21,12 +21,14 @@
     "jsx": "react-jsx",
     "paths": {
       "@ui": ["./src/components/uiKit/index"],
-      "@c": ["./src/styles/components/index"],
+      "@typography": ["./src/styles/typography/index"],
+      "@mixins": ["./src/styles/typography/Typography.styled"],
       "@type/*": ["./src/type/*"],
       "@api/*": ["./src/api/*"],
-  }
+    }
   },
   "include": [
-    "src"
-, "craco.config.ts"  ]
+    "src",
+    "craco.config.ts"
+  ]
 }

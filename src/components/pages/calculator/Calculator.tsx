@@ -1,11 +1,14 @@
 import React from "react";
-import UI from "@ui";
+import Title from "./title/Title";
+import S from "./Calculator.styled";
+import Currencies from "./currencies/Currencies";
 
 const Calculator: React.FC = () => {
 	return (
-		<>
-			<UI.TextField value={"poofoo"} />
-		</>
+		<S.container>
+			<Title />
+			<Currencies />
+		</S.container>
 	);
 };
 

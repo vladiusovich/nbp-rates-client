@@ -1,15 +1,12 @@
+import Layout from "./layouts/Layout";
+import Calculator from "./pages/calculator/Calculator";
+
 function App() {
 	return (
 		<div className="App">
-			<header>
-				<a
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					NBP Web API client
-				</a>
-			</header>
+			<Layout>
+				<Calculator />
+			</Layout>
 		</div>
 	);
 }

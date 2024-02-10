@@ -27,9 +27,5 @@ export const useRequest = <T>(url: string, payload?: RequestPayloadType): Reques
 
     const searchUrl = payload ? generateParams(payload) : "";
 
-    const rr = url + searchUrl;
-
-    console.log(rr);
-
-    return useSwr<T>(rr, fetcher);
+    return useSwr<T>(url + searchUrl, fetcher);
 }

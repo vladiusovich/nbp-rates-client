@@ -3,34 +3,39 @@ import React, { useState } from "react";
 import S from "./Currencies.styled";
 import { useRequest } from "@api/useRequest";
 import { urls } from "@api/urls";
+import { range } from "@helpers/random";
 import ExchangeRate from "@type/exchangerates/ExchangeRate";
+import CurrencуField from "./currencуField/CurrencуField";
+import BaseCurrencуField from "./baseCurrencуField/BaseCurrencуField";
+import CurrenciesContainer from "./CurrenciesContainer";
 
 const Currencies: React.FC = () => {
-	// const currencies = [...Array(10).keys()];
-	const [value, setValue] = useState("1");
+	const [baseCurrencyAmount, setBaseCurrencyAmount] = useState(1);
 
-	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		return setValue(e.target.value);
+	const handleOnChangeBaseCurrency = (amount: number) => {
+		return setBaseCurrencyAmount(amount);
 	};
 
 	const { data: exchangeRates, isLoading, error } = useRequest<ExchangeRate[]>(urls.exchangerates.tables, { table: "a" })
 
-	if (isLoading || !exchangeRates) return <h1>Loading...</h1>;
+	if (error) return <h1>Server error. {error.message}</h1>;
 
-	const exchangeRate = exchangeRates[0]
+	const loading = isLoading || !exchangeRates;
+
+	const exchangeRate = exchangeRates?.at(0);
+
+	const components = (exchangeRate?.rates ?? []).map(r => (<CurrencуField key={r.code} rate={r} baseCurrencyAmount={baseCurrencyAmount} />));
+
+	const iterator = range(15);
+	const loaderComponent = iterator.map(r => (<UI.Skeleton key={r} variant="rectangular" width={150} height={50} />));
+
 	return (
 		<S.container>
-			<UI.Stack direction="row" gap={2} flexWrap="wrap">
-				{exchangeRate?.rates.map(r => (
-					<>
-						<UI.TextField
-							label={r.code}
-							value={r.mid}
-							onChange={handleOnChange}
-						/>
-					</>)
-				)}
-			</UI.Stack>
+			<CurrenciesContainer
+				baseCurrency={(<BaseCurrencуField code="PLN" currency="polski złoty" onChange={handleOnChangeBaseCurrency} />)}
+			>
+				{loading ? loaderComponent : components}
+			</CurrenciesContainer>
 		</S.container>
 	);
 };

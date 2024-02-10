@@ -36,9 +36,11 @@ const typography = {
             ${fonts.semibold};
         `,
     bold: styled.div`
+            ${fonts.small};
             ${fonts.bold};
         `,
     gray: styled.div`
+            ${fonts.small};
             ${fonts.gray};
         `,
     grayXsmall: styled.div`

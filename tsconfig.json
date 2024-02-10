@@ -25,6 +25,8 @@
       "@mixins": ["./src/styles/typography/Typography.styled"],
       "@type/*": ["./src/types/*"],
       "@api/*": ["./src/api/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@common/*": ["./src/components/common/*"],
     }
   },
   "include": [

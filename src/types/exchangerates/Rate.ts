@@ -1,7 +1,7 @@
 export interface Rate {
     code: string;
     currency: string;
-    mid: string;
+    mid: number;
 }
 
 export default Rate;

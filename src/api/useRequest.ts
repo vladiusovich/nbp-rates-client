@@ -1,4 +1,5 @@
 import useSwr from 'swr'
+import fetcher from './fetcher';
 
 type RequestStateType<T> = {
     data?: T;
@@ -10,9 +11,6 @@ type RequestPayloadType = {
     [s: string]: string;
 };
 
-const fetcher = (url: string): Promise<any> => fetch(url).then((res) => res.json());
-
-
 const generateParams = (payload: RequestPayloadType): string => {
     const values = Object.values(payload);
 
@@ -20,12 +18,13 @@ const generateParams = (payload: RequestPayloadType): string => {
 
     return "/" + searchParams;
 }
-export const useRequest = <T>(url: string, payload?: RequestPayloadType): RequestStateType<T> => {
+
+export const useRequest = <T>(url: string, payload?: RequestPayloadType) => {
     if (!url) {
         throw new Error('Path is required');
     }
 
     const searchUrl = payload ? generateParams(payload) : "";
 
-    return useSwr<T>(url + searchUrl, fetcher);
+    return useSwr<T, Error>(url + searchUrl, fetcher);
 }

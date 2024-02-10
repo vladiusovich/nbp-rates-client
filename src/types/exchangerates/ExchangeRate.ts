@@ -1,7 +1,8 @@
 import Rate from "./Rate";
+import TableNameType from "./TableType";
 
 export interface ExchangeRate {
-    table: string;
+    table: TableNameType;
     currency: string;
     rates: Rate[];
 }

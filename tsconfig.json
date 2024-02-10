@@ -23,7 +23,7 @@
       "@ui": ["./src/components/uiKit/index"],
       "@typography": ["./src/styles/typography/index"],
       "@mixins": ["./src/styles/typography/Typography.styled"],
-      "@type/*": ["./src/type/*"],
+      "@type/*": ["./src/types/*"],
       "@api/*": ["./src/api/*"],
     }
   },

@@ -3,6 +3,7 @@ import React from "react";
 import Rate from "@type/exchangerates/Rate";
 import { roundNumber } from "@helpers/numbers";
 import typography from "@typography";
+import CurrencyField from "@common/fields/currencyField/CurrencyField";
 
 interface Props {
 	rate: Rate;
@@ -14,16 +15,11 @@ const CurrencуField: React.FC<Props> = ({ rate, baseCurrencyAmount }) => {
 
 	return (
 		<UI.Stack direction="column" gap={2}>
-			<UI.TextField
-				label={rate.code}
+			<CurrencyField
 				value={amount}
 				disabled
-			// onChange={handleOnChange}
-			// InputProps={{
-			// 	startAdornment: (
-			// 		<UI.FlagIcon code={r.code} loading="lazy" />
-			// 	),
-			// }}
+				code={rate.code}
+				// onChange={handleOnChange}
 			/>
 			<UI.Stack direction="row" gap={1} >
 				<typography.gray>{`1 ${rate.currency}`}</typography.gray>

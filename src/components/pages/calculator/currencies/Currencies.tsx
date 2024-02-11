@@ -27,7 +27,7 @@ const Currencies: React.FC = () => {
 	const components = (exchangeRate?.rates ?? []).map(r => (<CurrencуField key={r.code} rate={r} baseCurrencyAmount={baseCurrencyAmount} />));
 
 	const iterator = range(15);
-	const loaderComponent = iterator.map(r => (<UI.Skeleton key={r} variant="rectangular" width={150} height={50} />));
+	const loaderComponent = iterator.map(r => (<UI.Skeleton key={r} variant="rectangular" width={"100%"} height={50} />));
 
 	return (
 		<S.container>

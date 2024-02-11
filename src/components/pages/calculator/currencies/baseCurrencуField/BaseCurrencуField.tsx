@@ -1,3 +1,4 @@
+import CurrencyField from "@common/fields/currencyField/CurrencyField";
 import { roundNumber } from "@helpers/numbers";
 import typography from "@typography";
 import UI from "@ui";
@@ -23,15 +24,10 @@ const BaseCurrencуField: React.FC<Props> = ({ code, currency, onChange }) => {
 
 	return (
 		<UI.Stack direction="column" gap={2}>
-			<UI.TextField
-				label={code}
+			<CurrencyField
 				value={value}
+				code={code}
 				onChange={handleOnChange}
-			// InputProps={{
-			// 	startAdornment: (
-			// 		<UI.FlagIcon code={code} loading="lazy" />
-			// 	),
-			// }}
 			/>
 			<typography.gray>{currency}</typography.gray>
 		</UI.Stack>

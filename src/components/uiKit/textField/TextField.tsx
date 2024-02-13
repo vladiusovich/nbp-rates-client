@@ -8,6 +8,25 @@ export interface TextFieldPropsType extends Omit<FilledTextFieldProps, "variant"
     maxLength?: number;
 }
 
+const numericStratigy = (val: string) => {
+    let p = val.replace(",", ".");
+
+    if (p.length > 1 && p.at(0) === "0" && p.at(1) !== ".") {
+        p = p.replace("0", "")
+    }
+
+    return p;
+};
+
+// TODO
+const stringStratigy = (val: string) => {
+    return val;
+};
+
+const parseStratigy = (val: string, numeric?: boolean) => {
+    return numeric ? numericStratigy(val) : stringStratigy(val);
+};
+
 export const getNumericPattern = (precision: number) => new RegExp(`^[0-9]*((\\.|,)[0-9]{0,${precision}})?$`);
 
 
@@ -26,9 +45,8 @@ const TextField: React.FC<TextFieldPropsType> = ({
             return;
         }
 
-        if (numeric) {
-            e.target.value = e.target.value.replace(",", ".");
-        }
+        e.target.value = parseStratigy(e.target.value, numeric);
+
         onChange?.(e);
     };
 

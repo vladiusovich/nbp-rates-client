@@ -11,6 +11,7 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({ code, ...props }) => {
 		<UI.TextField
 			{...props}
 			numeric
+			numericPrecision={4}
 			maxLength={20}
 			InputProps={{
 				startAdornment: (

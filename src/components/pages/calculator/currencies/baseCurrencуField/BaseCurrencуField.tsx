@@ -19,7 +19,7 @@ const BaseCurrencуField: React.FC<Props> = ({ code, currency, onChange }) => {
 		const value = +rawValue;
 
 		setValue(rawValue)
-		onChange(roundNumber(value, 3));
+		onChange(roundNumber(value, 4));
 	};
 
 	return (

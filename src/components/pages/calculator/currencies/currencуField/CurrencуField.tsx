@@ -1,5 +1,5 @@
 import UI from "@ui";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Rate from "@type/exchangerates/Rate";
 import { roundNumber } from "@helpers/numbers";
 import typography from "@typography";
@@ -15,7 +15,17 @@ interface Props {
 
 const CurrencуField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange }) => {
 	const [current, setCurrent] = useState(false);
-	const [value, setValue] = useState("0");
+	const [focusValue, setFocusValue] = useState("0");
+	const [calculatedAmount, setCalculatedAmount] = useState("0");
+
+	useEffect(() => {
+		const crossRate = calculateCrossRate(rateAtoC, rate.mid);
+
+		const amount = roundNumber(crossRate * aToCAmount, 4);
+
+		setCalculatedAmount(amount.toString());
+	}, [rateAtoC, rate.mid, aToCAmount]);
+
 
 	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const rawValue = e.target.value;
@@ -23,7 +33,7 @@ const CurrencуField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange 
 		const value = +rawValue;
 
 		if (current) {
-			setValue(rawValue)
+			setFocusValue(rawValue)
 		}
 
 		onChange(rate.code, roundNumber(value, 4));
@@ -31,15 +41,14 @@ const CurrencуField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange 
 
 	const handleOnFocus = () => {
 		setCurrent(true);
+		setFocusValue(calculatedAmount)
 	};
 
 	const handleOnBlur = () => {
 		setCurrent(false);
 	};
 
-	const crossRate = calculateCrossRate(rateAtoC, rate.mid);
-
-	const amount = current ? value : roundNumber(crossRate * aToCAmount, 4);
+	const amount = current ? focusValue : calculatedAmount;
 
 	return (
 		<UI.Stack direction="column" gap={2}>

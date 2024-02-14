@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import styled from "styled-components";
 import UI from "../uiKit";
+import device from "@device";
 
 const S = {
     container: styled.main`
@@ -9,8 +10,14 @@ const S = {
         box-sizing: border-box;
         min-height: 100svh;
         background: ${({ theme }) => theme.light.colors.typo.lower};
-        padding-bottom: 40px;
-        padding-right: 16px;
+
+        @media ${device.mobileS} {
+			margin: 20px 24px;
+		}
+
+		@media ${device.laptopL} {
+			margin: 60px 350px;
+		}
     `,
 
     content: styled(UI.Stack)`

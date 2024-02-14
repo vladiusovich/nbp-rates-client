@@ -27,6 +27,7 @@
       "@api/*": ["./src/api/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@common/*": ["./src/components/common/*"],
+      "@device": ["./src/styles/media/device"],
     }
   },
   "include": [

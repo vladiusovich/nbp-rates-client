@@ -9,6 +9,7 @@ export const webpack = {
         '@mixins': resolve(__dirname, './src/styles/typography/Typography.styled'),
         '@helpers': resolve(__dirname, './src/helpers'),
         '@common': resolve(__dirname, './src/components/common'),
+        '@device': resolve(__dirname, './src/styles/media/device'),
     },
 };
 

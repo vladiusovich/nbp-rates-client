@@ -1,14 +1,23 @@
+import BreakpointType from "./BreakpointType";
 import StylesColorsType from "./ColorsType";
 
 declare global {
     interface ThemeType {
         defaultTheme: "light" | "dark";
-        // dark: {
-        //     colors: StylesColorsType;
-        // };
         light: {
             colors: StylesColorsType;
         };
+        borderRadius: {
+            regular: string;
+        }
+        // dark: {
+        //     colors: StylesColorsType;
+        // };
+        breakpoints: {
+            values: Record<BreakpointType, number>,
+        },
+
+
     }
 }
 

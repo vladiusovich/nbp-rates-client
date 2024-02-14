@@ -1,6 +1,7 @@
 import React from "react";
 import { FilledTextFieldProps } from "@mui/material";
 import MuiTextField from "@mui/material/TextField";
+import S from "./TextField.styled";
 
 export interface TextFieldPropsType extends Omit<FilledTextFieldProps, "variant" | "size"> {
     numeric?: boolean;
@@ -28,7 +29,6 @@ const parseStratigy = (val: string, numeric?: boolean) => {
 };
 
 export const getNumericPattern = (precision: number) => new RegExp(`^[0-9]*((\\.|,)[0-9]{0,${precision}})?$`);
-
 
 const TextField: React.FC<TextFieldPropsType> = ({
     inputRef,
@@ -60,7 +60,7 @@ const TextField: React.FC<TextFieldPropsType> = ({
     };
 
     return (
-        <MuiTextField
+        <S.textField
             {...props}
             onChange={handleChange}
             ref={inputRef}

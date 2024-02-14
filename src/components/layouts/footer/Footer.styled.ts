@@ -5,7 +5,6 @@ const S = {
     footer: styled.footer`
         ${mixins.default};
         ${mixins.gray};
-        padding: 8px 16px;
     `,
 };
 

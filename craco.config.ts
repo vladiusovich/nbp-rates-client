@@ -5,6 +5,7 @@ export const webpack = {
         '@ui': resolve(__dirname, './src/components/uiKit'),
         '@api': resolve(__dirname, './src/api'),
         '@type': resolve(__dirname, './src/types'),
+        '@hook': resolve(__dirname, './src/hooks'),
         '@typography': resolve(__dirname, './src/styles/typography/index'),
         '@mixins': resolve(__dirname, './src/styles/typography/Typography.styled'),
         '@helpers': resolve(__dirname, './src/helpers'),

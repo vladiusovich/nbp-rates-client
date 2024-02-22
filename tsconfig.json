@@ -24,6 +24,7 @@
       "@typography": ["./src/styles/typography/index"],
       "@mixins": ["./src/styles/typography/Typography.styled"],
       "@type/*": ["./src/types/*"],
+      "@hook/*": ["./src/hooks/*"],
       "@api/*": ["./src/api/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@common/*": ["./src/components/common/*"],

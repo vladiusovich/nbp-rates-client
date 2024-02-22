@@ -52,7 +52,6 @@ const TextField: React.FC<TextFieldPropsType> = ({
     const InputProps = {
         ...(props.InputProps ?? {}),
         inputProps: {
-            disableUnderline: true,
             maxLength: maxLength,
             ...(props.inputProps ?? {}),
             ...(props.InputProps?.inputProps ?? {}),
@@ -61,7 +60,6 @@ const TextField: React.FC<TextFieldPropsType> = ({
 
     const isGray = numeric && +(props?.value ?? "") === 0;
 
-    console.log(props?.value, isGray);
     return (
         <S.textField
             $grayInput={isGray}

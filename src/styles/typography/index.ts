@@ -26,6 +26,10 @@ const typography = {
     small: styled.div`
             ${fonts.small};
         `,
+
+    header: styled.div`
+        ${fonts.header};
+    `,
     xsmall: styled.div`
             ${fonts.xsmall};
         `,

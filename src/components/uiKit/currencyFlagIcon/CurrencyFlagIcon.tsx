@@ -1,73 +1,40 @@
-import styled from 'styled-components';
 import flags from './flags';
-import {
-    CurrencyFlagDimensions,
-    CurrencyFlagSizes,
-    ICurrencyFlagProps,
-    ICurrencyFlagStyledProps,
-    IDimension,
-} from './types';
+import S from './CurrencyFlagIcon.styled';
 
-const RATIO = 1.6;
-const DEFAULT_DIMENSION = {
-    height: 16,
-    width: 24,
+export type CurrencyFlagSizesType = 'sm' | 'md' | 'lg' | 'xl';
+
+export interface ICurrencyFlagProps {
+    currency: string;
+    size: CurrencyFlagSizesType;
+}
+
+const getCurrencyImage = (currency: string) => flags[currency.toLowerCase() as keyof typeof flags] ?? flags.$$$;
+
+export const sizes: Record<CurrencyFlagSizesType, number> = {
+    sm: 16,
+    md: 32,
+    lg: 36,
+    xl: 48,
 };
 
-const calculateDimension = (width?: number, height?: number): IDimension => {
-    if (!width && !height) {
-        return DEFAULT_DIMENSION;
-    }
+const defineSize = (size: CurrencyFlagSizesType) => {
+    const width = sizes[size];
+    const height = width / 1.6;
 
-    let w = width;
-    let h = height;
+    return { width, height };
+}
 
-    if (!width && height) {
-        w = height * RATIO;
-    } else if (!height && width) {
-        h = width / RATIO;
-    }
+const CurrencyFlagImage: React.FC<ICurrencyFlagProps> = ({ currency, size }) => {
+    const imageSrc = getCurrencyImage(currency);
+    const { width, height } = defineSize(size);
 
-    return {
-        height: h,
-        width: w,
-    };
+    return (
+        <S.currencyFlagImage
+            $imgUrl={imageSrc}
+            $width={width}
+            $height={height}
+        />
+    );
 };
-
-const getCurrencyImage = (ccy: string) => {
-    return flags[ccy.toLowerCase() as keyof typeof flags] ?? flags.$$$;
-};
-
-export const currencyFlagDims: CurrencyFlagDimensions = {
-    [CurrencyFlagSizes.SMALL]: {
-        height: 10,
-        width: 16,
-    },
-    [CurrencyFlagSizes.MEDIUM]: DEFAULT_DIMENSION,
-    [CurrencyFlagSizes.LARGE]: {
-        height: 24,
-        width: 36,
-    },
-    [CurrencyFlagSizes.XLARGE]: {
-        height: 32,
-        width: 48,
-    },
-};
-
-const CurrencyFlagImage = styled.span<ICurrencyFlagProps>`
-  background-image: url('${({ currency }) => getCurrencyImage(currency)}');
-  background-size: cover;
-  display: inline-block;
-  ${({ height, size, width }: ICurrencyFlagStyledProps) => {
-        const { height: h, width: w } = size
-            ? currencyFlagDims[size]
-            : calculateDimension(width, height);
-
-        return `
-      height: ${h}px;
-      width: ${w}px;
-    `;
-    }}
-`;
 
 export default CurrencyFlagImage;

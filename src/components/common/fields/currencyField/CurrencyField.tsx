@@ -16,7 +16,8 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({ code, ...props }) => {
 			InputProps={{
 				startAdornment: (
 					<S.container>
-						<S.currencyFlagIcon currency={code} />
+						<S.currencyFlagIcon currency={code} size="md" />
+						{/* <S.flagIcon code={code} /> */}
 					</S.container>
 				),
 			}}

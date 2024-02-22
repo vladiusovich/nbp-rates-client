@@ -1,11 +1,12 @@
 import { urls } from "@api/urls";
 import { useRequest } from "@api/useRequest";
-import { getCurrentTime } from "@helpers/dateHelper";
+import { getDisplayedDate, getCurrentTime } from "@helpers/dateHelper";
 import useCallWhenTabIsActive from "@hook/useCallWhenTabIsActive";
 import ExchangeRate from "@type/exchangerates/ExchangeRate";
 import typography from "@typography";
 import UI from "@ui";
 import React, { useState } from "react";
+import S from "./Title.styled";
 
 const Title: React.FC = () => {
 	const { data: exchangeRates, isLoading } = useRequest<ExchangeRate[]>(urls.exchangerates.tables, { table: "a" })
@@ -17,15 +18,16 @@ const Title: React.FC = () => {
 
 	const exchangeRate = exchangeRates?.at(0);
 
+	const ddd = getDisplayedDate(exchangeRate?.effectiveDate ?? "");
 	return (
-		<>
-			<typography.h4>
+		<UI.Stack direction="column" gap={1.5}>
+			<typography.header>
 				Kalkulator walut wg średnich kursów NBP na dziś
-			</typography.h4>
-			{loading ? (<UI.Skeleton variant="text" width={250} height={23} />) : (<typography.small>
-				Aktualizowane: {exchangeRate?.effectiveDate}, {currentTime}
-			</typography.small>)}
-		</>
+			</typography.header>
+			{loading
+				? (<UI.Skeleton variant="text" width={250} height={23} />)
+				: (<S.small>Aktualizowane: {ddd}, {currentTime}</S.small>)}
+		</UI.Stack>
 	);
 };
 

@@ -36,8 +36,8 @@ const fonts = {
     `,
 
     header: css`
-        font-size: 22px;
-        font-weight: 600;
+        font-size: 32px;
+        font-weight: 400;
         line-height: 140%;
     `,
 

@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 const S = {
 	container: styled.div`
-		margin-right: 5px;
-		margin-top: 6px;
-		// box-shadow: 0 0 14px 0px #0000003b;
+		display: flex;
+		margin-right: 14px;
 	`,
 	currencyFlagIcon: styled(UI.CurrencyFlagIcon)`
-		// margin: 10px;
+	`,
+	flagIcon: styled(UI.FlagIcon)`
 	`,
 };
 

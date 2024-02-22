@@ -1,22 +1,30 @@
+import dayjs from "dayjs";
 
-const pad = (num: number): string => num.toString().padStart(2, '0');
+const defaultDateFormat = "DD-MM-YYYY";
+const defaultTimeFormat = "HH:mm:ss";
 
-export const getCurrentTime = (): string => {
-    const now = new Date();
+const formatValue = (dateString: string, format: string): string => {
+    if (
+        typeof dateString !== "string"
+        && !(dateString as unknown instanceof Date)
+    ) {
+        return dateString;
+    }
 
-    const hours = pad(now.getHours());
-    const minutes = pad(now.getMinutes());
+    const dayJsValue = dayjs(dateString);
+    if (!dayJsValue.isValid()) {
+        return dateString;
+    }
 
-    return `${hours}:${minutes}`;
-  };
+    return dayJsValue.format(format);
+};
 
-export const getCurrentDateTime = (): string => {
-    const now = new Date();
+export const getDisplayedDate = (value: string, dateFormat?: string): string => {
+    return formatValue(value, dateFormat ?? defaultDateFormat);
+};
 
-    const day = pad(now.getDate());
-    const month = pad(now.getMonth() + 1); // getMonth() returns 0-11
-    const year = now.getFullYear();
-    const time = getCurrentTime();
-
-    return `${day}-${month}-${year}, ${time}`;
+export const getCurrentTime = (withSeconds?: boolean): string => {
+    const value = dayjs().toISOString();
+    const resultTimeFormat = withSeconds ? defaultTimeFormat : defaultTimeFormat.replace(":ss", "");
+    return formatValue(value, resultTimeFormat);
 };

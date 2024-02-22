@@ -59,10 +59,15 @@ const CurrencуField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange 
 				onFocus={handleOnFocus}
 				onBlur={handleOnBlur}
 			/>
-			<UI.Stack direction="row" gap={1} >
+			<UI.Stack
+				direction="row"
+				gap={1}
+				justifyContent="flex-start"
+				alignItems="center"
+			>
 				<typography.gray>{`1 ${rate.currency}`}</typography.gray>
 				<typography.gray>=</typography.gray>
-				<typography.bold>{rate.mid}</typography.bold>
+				<typography.small>{rate.mid} zł</typography.small>
 			</UI.Stack>
 		</UI.Stack>
 	);

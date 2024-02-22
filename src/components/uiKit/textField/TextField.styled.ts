@@ -11,18 +11,29 @@ const hoverAndFocusStyles = css`
     .MuiInputBase-root {
         &:hover,
         &.Mui-focused {
+            outline: none;
             border-color: ${({ theme }) => theme.light.colors.border.low};
         }
-    }
-    .MuiInputLabel-root {
+
         &.Mui-focused fieldset {
-            border-color: ${({ theme }) => theme.light.colors.border.low};
+            border: none;
+        }
+        fieldset {
+            border: none;
         }
     }
 `;
 
+const normalInputColor = css`
+    color: ${({ theme }) => theme.light.colors.typo.low};
+`;
+
+const grayInputColor = css`
+    color: ${({ theme }) => theme.light.colors.typo.high};
+`;
+
 const S = {
-    textField: styled(TextField)`
+    textField: styled(TextField) <{ $grayInput?: boolean }>`
         * {
             outline: none;
             border: none;
@@ -50,7 +61,8 @@ const S = {
             height: 100%;
 
             font-size: 32px;
-            color: ${({ theme }) => theme.light.colors.typo.low};
+            color: ${({ theme }) => theme.light.colors.typo.high};
+            ${({ $grayInput = false }) => ($grayInput ? grayInputColor : normalInputColor)};
 
             border-radius: ${({ theme }) => theme.borderRadius.regular};
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { FilledTextFieldProps } from "@mui/material";
-import MuiTextField from "@mui/material/TextField";
 import S from "./TextField.styled";
 
 export interface TextFieldPropsType extends Omit<FilledTextFieldProps, "variant" | "size"> {
@@ -53,14 +52,19 @@ const TextField: React.FC<TextFieldPropsType> = ({
     const InputProps = {
         ...(props.InputProps ?? {}),
         inputProps: {
+            disableUnderline: true,
             maxLength: maxLength,
             ...(props.inputProps ?? {}),
             ...(props.InputProps?.inputProps ?? {}),
         },
     };
 
+    const isGray = numeric && +(props?.value ?? "") === 0;
+
+    console.log(props?.value, isGray);
     return (
         <S.textField
+            $grayInput={isGray}
             {...props}
             onChange={handleChange}
             ref={inputRef}

@@ -1,11 +1,10 @@
-const size = {
-    mobileS: '320px',
-    mobileM: '375px',
-    mobileL: '425px',
-    tablet: '768px',
-    laptop: '1024px',
-    laptopL: '1440px',
-    desktop: '2560px'
-}
+export type DeviceType = "mobile" | "tablet" | "laptop" | "desktop";
 
-export default size;
+const breakpoints: Record<DeviceType, number> = {
+    mobile: 800,
+    tablet: 1024,
+    laptop: 1400,
+    desktop: 1920,
+};
+
+export default breakpoints;

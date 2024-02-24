@@ -11,11 +11,13 @@ const S = {
         min-height: 100svh;
         background: ${({ theme }) => theme.light.colors.typo.lower};
 
-        @media ${device.mobileS} {
-			margin: 20px 24px;
+		margin: 40px 20px;
+
+        @media ${device.tablet} {
+			margin: 60px 48px;
 		}
 
-		@media ${device.laptopL} {
+		@media ${device.desktop} {
 			margin: 60px 350px;
 		}
     `,

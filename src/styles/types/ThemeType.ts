@@ -1,4 +1,3 @@
-import BreakpointType from "./BreakpointType";
 import StylesColorsType from "./ColorsType";
 
 declare global {
@@ -13,11 +12,6 @@ declare global {
         // dark: {
         //     colors: StylesColorsType;
         // };
-        breakpoints: {
-            values: Record<BreakpointType, number>,
-        },
-
-
     }
 }
 

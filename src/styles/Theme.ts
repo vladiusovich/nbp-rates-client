@@ -18,15 +18,6 @@ const theme: ThemeType = {
             border: colors,
         }
     },
-    breakpoints: {
-        values: {
-            mobileS: 800,
-            mobileM: 1024,
-            tablet: 1400,
-            desktop: 0,
-            desktopL: 0
-        }
-    },
     borderRadius: {
         regular: "8px"
     }

@@ -9,10 +9,8 @@ interface Props {
 const Layout: React.FC<Props> = ({ children }) => {
     return (
         <S.container>
-            <S.content>
-                {/* <Outlet /> */}
-                {children}
-            </S.content>
+            {/* <Outlet /> */}
+            {children}
             <Footer />
         </S.container>
     );

@@ -1,16 +1,29 @@
 import styled from "styled-components";
 import GridProps from "./GridProps";
+import device from "@device";
 
 const gridSpacingStep = 8;
+
 export type GridSpacing = number | string;
 
-const calculateWidth = (value?: number) => {
-    return `calc(100% * ${value} / 12)`;
+const calcWidth = (value: number) => (`calc(100% * ${value} / 12)`);
+
+const calculateWidth = (props: GridProps, value?: number) => {
+    if (value) {
+        return calcWidth(value);
+    }
+
+    // TODO: implement custom media for grids
+    const { xl, lg, md, sm, xs } = props;
+
+    const values = Object.values({ xl, lg, md, sm, xs });
+
+    const v = values.find(v => v !== undefined);
+
+    return calcWidth(v ?? 4);
 };
 
-const calculatSpace = (value?: number) => {
-    return (value ?? 0) * gridSpacingStep;
-};
+const calculatSpace = (value?: number) => ((value ?? 0) * gridSpacingStep);
 
 const calculatePadding = (rowSpacing?: number, columnSpacing?: number) => {
     const row = calculatSpace(rowSpacing);
@@ -32,24 +45,28 @@ const GridContainer = styled.div<GridProps>`
 
 const GridItem = styled.div<GridProps>`
     flex-basis: auto;
-    width: ${({ xs }) => calculateWidth(xs)};
+    width: ${({ xs, ...props }) => calculateWidth(props, xs)};
     padding: ${(props) => calculatePadding(props.rowSpacing, props.columnSpacing)};
     box-sizing: border-box;
 
-    @media (min-width: 600px) {
-      width: ${({ sm }) => calculateWidth(sm)};
+    @media ${device.mobile} {
+      width: ${({ sm, ...props }) => calculateWidth(props, sm)};
+		}
+
+    @media ${device.tablet} {
+      width: ${({ sm, ...props }) => calculateWidth(props, sm)};
     }
 
-    @media (min-width: 960px) {
-      width: ${({ md }) => calculateWidth(md)};
+    @media ${device.laptop} {
+      width: ${({ md, ...props }) => calculateWidth(props, md)};
     }
 
-    @media (min-width: 1280px) {
-      width: ${({ lg }) => calculateWidth(lg)};
+    @media ${device.desktop} {
+      width: ${({ lg, ...props }) => calculateWidth(props, lg)};
     }
 
-    @media (min-width: 1920px) {
-      width: ${({ xl }) => calculateWidth(xl)};
+    @media ${device.desktop} {
+      width: ${({ xl, ...props }) => calculateWidth(props, xl)};
     }
 `;
 

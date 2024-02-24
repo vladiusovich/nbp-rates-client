@@ -5,10 +5,10 @@ import Currencies from "./currencies/Currencies";
 
 const Calculator: React.FC = () => {
 	return (
-		<S.container>
+		<>
 			<Title />
 			<Currencies />
-		</S.container>
+		</>
 	);
 };
 

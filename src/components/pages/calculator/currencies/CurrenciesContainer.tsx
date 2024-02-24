@@ -8,7 +8,6 @@ interface Props {
 }
 
 const CurrenciesContainer: React.FC<Props> = ({ isLoading, children }) => {
-	isLoading = true;
 	const loaderComponent = range(10).map((r, i) => (
 		<UI.Grid key={i} md={3} xs={12} rowSpacing={7.5} columnSpacing={6}>
 			<UI.Skeleton key={r} variant="rect" width={"100%"} height={"65"} />

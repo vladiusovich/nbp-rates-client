@@ -3,7 +3,7 @@ import S from "./Currencies.styled";
 import { useRequest } from "@api/useRequest";
 import { urls } from "@api/urls";
 import ExchangeRate from "@type/exchangerates/ExchangeRate";
-import CurrencуField from "./currencуField/CurrencуField";
+import CurrencуFormField from "./currencуFormField/CurrencуFormField";
 import CurrenciesContainer from "./CurrenciesContainer";
 import Rate from "@type/exchangerates/Rate";
 
@@ -33,7 +33,7 @@ const Currencies: React.FC = () => {
 	};
 
 	const currencуFields = (rates ?? []).map(r => (
-		<CurrencуField
+		<CurrencуFormField
 			key={r.code}
 			rate={r}
 			rateAtoC={rateAtoC}

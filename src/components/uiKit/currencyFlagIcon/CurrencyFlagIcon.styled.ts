@@ -7,7 +7,8 @@ interface Props {
 }
 
 export const S = {
-    currencyFlagImage: styled.span <Props>`
+    currencyFlagImage: styled.div <Props>`
+        vertical-align: middle;
         background-image: url('${({ $imgUrl }) => $imgUrl}');
         background-size: cover;
         display: inline-block;

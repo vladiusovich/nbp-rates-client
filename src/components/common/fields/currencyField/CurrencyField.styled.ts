@@ -1,10 +1,13 @@
 import UI from "@ui";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+const grayInputColor = css`
+    color: ${({ theme }) => theme.light.colors.typo.high};
+`;
 
 const S = {
-	container: styled.div`
-		display: flex;
-		margin-right: 14px;
+	currencyInput: styled(UI.CurrencyInput) <{ $grayInput?: boolean }>`
+		${({ $grayInput = false }) => ($grayInput ? grayInputColor : null)};
 	`,
 	currencyFlagIcon: styled(UI.CurrencyFlagIcon)`
 	`,

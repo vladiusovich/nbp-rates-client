@@ -18,7 +18,8 @@ const Title: React.FC = () => {
 
 	const exchangeRate = exchangeRates?.at(0);
 
-	const ddd = getDisplayedDate(exchangeRate?.effectiveDate ?? "");
+	const effectiveDate = getDisplayedDate(exchangeRate?.effectiveDate ?? "");
+
 	return (
 		<UI.Stack direction="column" gap={1.5}>
 			<typography.header>
@@ -26,7 +27,7 @@ const Title: React.FC = () => {
 			</typography.header>
 			{loading
 				? (<UI.Skeleton variant="text" width={250} height={23} />)
-				: (<S.small>Aktualizowane: {ddd}, {currentTime}</S.small>)}
+				: (<S.small>Aktualizowane: {effectiveDate}, {currentTime}</S.small>)}
 		</UI.Stack>
 	);
 };

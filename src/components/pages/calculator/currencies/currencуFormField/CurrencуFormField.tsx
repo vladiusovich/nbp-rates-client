@@ -5,6 +5,7 @@ import { roundNumber } from "@helpers/numbers";
 import typography from "@typography";
 import CurrencyField from "@common/fields/currencyField/CurrencyField";
 import { calculateCrossRate } from "@helpers/currencies";
+import useDebounce from "@hook/useDebounce";
 
 interface Props {
 	rate: Rate;
@@ -13,35 +14,33 @@ interface Props {
 	onChange: (currency: string, amount: number) => void;
 }
 
-const CurrencуField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange }) => {
+const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange }) => {
 	const [current, setCurrent] = useState(false);
 	const [focusValue, setFocusValue] = useState("0");
-	const [calculatedAmount, setCalculatedAmount] = useState("0");
+	const [calculatedAmount, setCalculatedAmount] = useState(0);
+	const [calculatedAmountToCall, setCalculatedAmountToCall] = useState(0);
 
 	useEffect(() => {
 		const crossRate = calculateCrossRate(rateAtoC, rate.mid);
-
 		const amount = roundNumber(crossRate * aToCAmount, 4);
-
-		setCalculatedAmount(amount.toString());
+		setCalculatedAmount(amount);
 	}, [rateAtoC, rate.mid, aToCAmount]);
 
+	// TODO: refactor and rename
+	const debouncedCall = useDebounce(() => (onChange(rate.code, calculatedAmountToCall)), 200);
 
-	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const rawValue = e.target.value;
-
-		const value = +rawValue;
-
+	const handleOnChange = (value: string, float: number) => {
 		if (current) {
-			setFocusValue(rawValue)
+			setFocusValue(value)
 		}
 
-		onChange(rate.code, roundNumber(value, 4));
+		setCalculatedAmountToCall(float);
+		debouncedCall();
 	};
 
 	const handleOnFocus = () => {
 		setCurrent(true);
-		setFocusValue(calculatedAmount)
+		setFocusValue(calculatedAmount.toString())
 	};
 
 	const handleOnBlur = () => {
@@ -53,7 +52,7 @@ const CurrencуField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange 
 	return (
 		<UI.Stack direction="column" gap={2}>
 			<CurrencyField
-				value={amount}
+				value={amount.toString()}
 				code={rate.code}
 				onChange={handleOnChange}
 				onFocus={handleOnFocus}
@@ -73,4 +72,4 @@ const CurrencуField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange 
 	);
 };
 
-export default CurrencуField;
+export default CurrencуFormField;

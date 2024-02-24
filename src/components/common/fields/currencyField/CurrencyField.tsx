@@ -1,26 +1,48 @@
-import UI, { FilledTextFieldProps } from "@ui";
-import React from "react";
+import UI, { CurrencyInputProps } from "@ui";
+import React, { useState } from "react";
 import S from "./CurrencyField.styled";
 
-interface CurrencyFieldProps extends Omit<FilledTextFieldProps, "variant" | "size"> {
+interface CurrencyFieldProps {
 	code: string;
+	value: string | number | undefined;
+	onChange: (value: string, float: number) => void;
+	onFocus: () => void;
+	onBlur: () => void;
 }
 
-const CurrencyField: React.FC<CurrencyFieldProps> = ({ code, ...props }) => {
+const CurrencyField: React.FC<CurrencyFieldProps> = ({ code, value, onChange, onFocus, onBlur }) => {
+	const [inFocus, setInFocus] = useState(false);
+
+	const onFocusHandle= () => {
+		setInFocus(true);
+		onFocus?.();
+	};
+
+	const onBlurHandle= () => {
+		setInFocus(false);
+		onBlur?.();
+	};
+
+	const handleOnValueChange: CurrencyInputProps['onValueChange'] = (_value, _name, _values) => {
+		onChange?.(_value ?? "", _values?.float ?? 0);
+	};
+
+    const isGray = !inFocus && (value && (+value ?? 0)) === 0;
+
 	return (
-		<UI.TextField
-			{...props}
-			numeric
-			numericPrecision={4}
+		<S.currencyInput
+			value={value}
+			decimalsLimit={4}
+			allowNegativeValue={false}
 			maxLength={20}
-			InputProps={{
-				startAdornment: (
-					<S.container>
-						<S.currencyFlagIcon currency={code} size="md" />
-						{/* <S.flagIcon code={code} /> */}
-					</S.container>
-				),
-			}}
+			step={10}
+			groupSeparator={" "}
+			startAdornment={(<UI.FlagIcon code={code} />)}
+			// startAdornment={(<UI.CurrencyFlagIcon currency={code} size="md" />)}
+			onValueChange={handleOnValueChange}
+			onFocus={() => onFocusHandle()}
+			onBlur={() => onBlurHandle()}
+			$grayInput={isGray}
 		/>
 	);
 };

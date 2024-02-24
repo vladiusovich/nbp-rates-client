@@ -1,8 +1,8 @@
-import { Grid } from "@mui/material";
 import styled from "styled-components";
+import UI from "@ui";
 
 const S = {
-	container: styled(Grid)`
+	container: styled(UI.Grid)`
 	`,
 };
 

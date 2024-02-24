@@ -50,7 +50,7 @@ const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onCha
 	const amount = current ? focusValue : calculatedAmount;
 
 	return (
-		<UI.Stack direction="column" gap={2}>
+		<UI.Stack direction="column" gap={16}>
 			<CurrencyField
 				value={amount.toString()}
 				code={rate.code}
@@ -60,7 +60,7 @@ const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onCha
 			/>
 			<UI.Stack
 				direction="row"
-				gap={1}
+				gap={8}
 				justifyContent="flex-start"
 				alignItems="center"
 			>

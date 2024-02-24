@@ -9,7 +9,7 @@ interface Props {
 const Layout: React.FC<Props> = ({ children }) => {
     return (
         <S.container>
-            <S.content flexGrow={1}>
+            <S.content>
                 {/* <Outlet /> */}
                 {children}
             </S.content>

@@ -21,14 +21,16 @@ const Title: React.FC = () => {
 	const effectiveDate = getDisplayedDate(exchangeRate?.effectiveDate ?? "");
 
 	return (
-		<UI.Stack direction="column" gap={1.5}>
-			<typography.header>
-				Kalkulator walut wg średnich kursów NBP na dziś
-			</typography.header>
-			{loading
-				? (<UI.Skeleton variant="text" width={250} height={23} />)
-				: (<S.small>Aktualizowane: {effectiveDate}, {currentTime}</S.small>)}
-		</UI.Stack>
+		<>
+			<UI.Stack direction="column" gap={12}>
+				<typography.header>
+					Kalkulator walut wg średnich kursów NBP na dziś
+				</typography.header>
+				{loading
+					? (<UI.Skeleton variant="rect" width={"250px"} height={"23px"} />)
+					: (<S.small>Aktualizowane: {effectiveDate}, {currentTime}</S.small>)}
+			</UI.Stack>
+		</>
 	);
 };
 

@@ -6,6 +6,7 @@ import ExchangeRate from "@type/exchangerates/ExchangeRate";
 import CurrencуFormField from "./currencуFormField/CurrencуFormField";
 import CurrenciesContainer from "./CurrenciesContainer";
 import Rate from "@type/exchangerates/Rate";
+import ErrorContent from "@common/error/ErrorContent";
 
 const Currencies: React.FC = () => {
 	const [atoCAmount, setAtoCAmount] = useState(1);
@@ -15,7 +16,9 @@ const Currencies: React.FC = () => {
 
 	const exchangeRate = exchangeRates?.at(0);
 
-	if (error) return <h1>Server error. {error.message}</h1>;
+	if (error) {
+		return (<ErrorContent message={error.message} />);
+	}
 
 	const plnRate = {
 		code: "PLN",

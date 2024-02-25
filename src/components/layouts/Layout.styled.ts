@@ -14,9 +14,6 @@ const S = {
 
 		margin: 40px 20px;
 
-        @media ${device.sm} {
-			margin: 60px 48px;
-		}
 
 		@media ${device.lg} {
 			margin: 60px 350px;

@@ -1,7 +1,6 @@
 import styled, { RuleSet, css } from "styled-components";
 import GridProps, { GridSize, ResponsiveGridSpacing, SpacingType } from "./GridProps";
 import device from "@device";
-import { DeviceType } from "../../../styles/media/breakpoints";
 
 const gridSpacingStep = 8;
 
@@ -24,17 +23,12 @@ const calculateWidth = (props: GridProps, value?: number) => {
   return calcWidth(v ?? 4);
 };
 
-// Type guard for checking if columnSpacing is a number (GridSpacing)
-const isGridSpacing = (value: any): value is GridSpacing => {
-  return typeof value === 'number';
-}
+const isGridSpacing = (value: any): value is GridSpacing => (typeof value === 'number');
 
-// Type guard for checking if columnSpacing is ResponsiveGridSpacing
 const isResponsiveGridSpacing = (value: any): value is ResponsiveGridSpacing => {
   if (typeof value !== 'object' || value === null) {
     return false;
   }
-
   return true;
 }
 
@@ -42,20 +36,8 @@ const calculatSpace = (value?: number) => ((value ?? 0) * gridSpacingStep);
 const calculatSpaceCss = (value?: number) => (`calc(${value}px / 2)`);
 const calculateMarginCss = (value: number) => `calc(${value}px / -2)`;
 
-export type MediaQueryStrings = {
-  [K in GridSize]: DeviceType;
-};
-
-// TODO: reimplement custom media
-const mediaMapper: MediaQueryStrings = {
-  lg: "lg",
-  md: "md",
-  sm: "sm",
-  xs: "xs"
-}
-
 const generateMedia = (gridSize: GridSize, styles: string): RuleSet<Object> => {
-  const media = device[mediaMapper[gridSize]];
+  const media = device[gridSize];
   return css`
       @media ${media} {
         ${styles}
@@ -63,7 +45,7 @@ const generateMedia = (gridSize: GridSize, styles: string): RuleSet<Object> => {
   `;
 };
 
-const mapGridSizes = (spacing: ResponsiveGridSpacing, process: (size: GridSize, value: number) => RuleSet<Object>) => {
+const createStylesForEachGridSize = (spacing: ResponsiveGridSpacing, process: (size: GridSize, value: number) => RuleSet<Object>) => {
   return Object.keys(spacing as ResponsiveGridSpacing).map((k: string) => {
     const gridSize = k as GridSize;
     const value = spacing[gridSize] ?? 0;
@@ -72,81 +54,43 @@ const mapGridSizes = (spacing: ResponsiveGridSpacing, process: (size: GridSize, 
   });
 };
 
-// TODO: reimplement
-const processRowSpace = (rowSpacing?: SpacingType) => {
-  if (isResponsiveGridSpacing(rowSpacing)) {
-    const styles = mapGridSizes(rowSpacing, (gridSize, value) => (
-      generateMedia(gridSize, `
-        padding-left: ${calculatSpaceCss(value)};
-        padding-right: ${calculatSpaceCss(value)};
-    `)));
+const processSpacingStyles = (spacing: SpacingType, createStyles: (value: number) => string) => {
+  if (isResponsiveGridSpacing(spacing)) {
+    const styles = createStylesForEachGridSize(spacing, (gridSize, value) => (
+      generateMedia(gridSize, createStyles(value))));
 
     return styles;
   } else {
-    const с = calculatSpace(rowSpacing);
-
-    return `
-      padding-left: ${calculatSpaceCss(с)};
-      padding-right: ${calculatSpaceCss(с)};
-    `;
+    return createStyles(calculatSpace(spacing ?? 1));
   }
+}
+
+const processRowSpace = (rowSpacing?: SpacingType) => {
+  return processSpacingStyles(rowSpacing ?? 1, (value => (`
+    padding-left: ${calculatSpaceCss(value)};
+    padding-right: ${calculatSpaceCss(value)};
+  `)));
 }
 
 const processColumnSpace = (columnSpacing?: SpacingType) => {
-  if (isResponsiveGridSpacing(columnSpacing)) {
-    const styles = mapGridSizes(columnSpacing, (gridSize, value) => (
-      generateMedia(gridSize, `
-        padding-top: ${calculatSpaceCss(value)};
-        padding-bottom: ${calculatSpaceCss(value)};
-    `)));
-
-    return styles;
-  } else {
-    const с = calculatSpace(columnSpacing);
-
-    return `
-      padding-top: ${calculatSpaceCss(с)};
-      padding-bottom: ${calculatSpaceCss(с)};
-    `;
-  }
+  return processSpacingStyles(columnSpacing ?? 1, (value => (`
+    padding-top: ${calculatSpaceCss(value)};
+    padding-bottom: ${calculatSpaceCss(value)};
+  `)));
 }
 
 const processColumnMargin = (columnSpacing?: SpacingType) => {
-  if (isResponsiveGridSpacing(columnSpacing)) {
-    const styles = mapGridSizes(columnSpacing, (gridSize, value) => (
-      generateMedia(gridSize, `
-        margin-top: ${calculateMarginCss(value)};
-        margin-bottom: ${calculateMarginCss(value)};
-    `)));
-
-    return styles;
-  } else {
-    const с = calculatSpace(columnSpacing);
-
-    return `
-      margin-top: ${calculateMarginCss(с)};
-      margin-bottom: ${calculateMarginCss(с)};
-    `;
-  }
+  return processSpacingStyles(columnSpacing ?? 1, (value => (`
+    margin-top: ${calculateMarginCss(value)};
+    margin-bottom: ${calculateMarginCss(value)};
+  `)));
 }
 
 const processRowMargin = (rowSpacing?: SpacingType) => {
-  if (isResponsiveGridSpacing(rowSpacing)) {
-    const styles = mapGridSizes(rowSpacing, (gridSize, value) => (
-      generateMedia(gridSize, `
-        margin-left: ${calculateMarginCss(value)};
-        margin-right: ${calculateMarginCss(value)};
-    `)));
-
-    return styles;
-  } else {
-    const с = calculatSpace(rowSpacing);
-
-    return `
-      margin-left: ${calculateMarginCss(с)};
-      margin-right: ${calculateMarginCss(с)};
-    `;
-  }
+  return processSpacingStyles(rowSpacing ?? 1, (value => (`
+    margin-top: ${calculateMarginCss(value)};
+    margin-bottom: ${calculateMarginCss(value)};
+  `)));
 }
 
 const GridContainer = styled.div<GridProps>`

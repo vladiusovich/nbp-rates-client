@@ -20,11 +20,11 @@ const Currencies: React.FC = () => {
 		return (<ErrorContent message={error.message} />);
 	}
 
-	const plnRate = {
+	const plnRate: Rate = {
 		code: "PLN",
 		currency: "polski złoty",
 		mid: 1,
-	} as Rate;
+	};
 
 	const rates = [plnRate, ...exchangeRate?.rates ?? []];
 

@@ -13,12 +13,13 @@ const S = {
 
 		margin: 40px 20px;
 
-        @media ${device.tablet} {
+        @media ${device.sm} {
 			margin: 60px 48px;
 		}
 
-		@media ${device.desktop} {
+		@media ${device.lg} {
 			margin: 60px 350px;
+
 		}
     `,
 

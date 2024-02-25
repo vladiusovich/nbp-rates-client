@@ -1,3 +1,16 @@
+
+export const GridSizeList = ["xs", "sm", "md","lg"] as const;
+
+export type GridSize = typeof GridSizeList[number];
+
+export type GridSpacing = number;
+
+export type ResponsiveGridSpacing = {
+    [K in GridSize]?: number | null;
+};
+
+export type SpacingType = GridSpacing | ResponsiveGridSpacing;
+
 interface GridProps {
     children: React.ReactNode;
     container?: boolean;
@@ -6,8 +19,8 @@ interface GridProps {
     md?: number;
     lg?: number;
     xl?: number;
-    columnSpacing?: number;
-    rowSpacing?: number;
+    columnSpacing?: SpacingType;
+    rowSpacing?: SpacingType;
 }
 
 export default GridProps;

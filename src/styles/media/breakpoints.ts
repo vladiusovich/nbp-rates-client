@@ -1,10 +1,10 @@
-export type DeviceType = "mobile" | "tablet" | "laptop" | "desktop";
+export type DeviceType = "xs" | "sm" | "md" | "lg";
 
 const breakpoints: Record<DeviceType, number> = {
-    mobile: 800,
-    tablet: 1024,
-    laptop: 1400,
-    desktop: 1920,
+    xs: 800,
+    sm: 1024,
+    md: 1400,
+    lg: 1920,
 };
 
 export default breakpoints;

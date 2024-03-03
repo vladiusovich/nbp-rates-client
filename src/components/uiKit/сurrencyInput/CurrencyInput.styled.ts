@@ -1,12 +1,15 @@
 import styled, { css } from "styled-components";
+import { changeColorAlpha } from "../../../styles/types/colorsHelper";
 
 
 const hoverAndFocusStyles = css`
     &:hover {
-        border-color: ${({ theme }) => theme.light.colors.border.low};
+        border-color: ${({ theme }) => theme.light.colors.border.focus};
+        box-shadow: ${({ theme }) => `0 0 8px ${changeColorAlpha(theme.light.colors.border.focus, 0.5)}`};
     }
     &:focus-within {
-            border-color: ${({ theme }) => theme.light.colors.border.low};
+        border-color: ${({ theme }) => theme.light.colors.border.focus};
+        box-shadow: ${({ theme }) => `0 0 8px ${changeColorAlpha(theme.light.colors.border.focus, 0.5)}`};
     }
 `;
 

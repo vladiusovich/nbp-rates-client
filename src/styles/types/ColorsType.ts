@@ -6,10 +6,14 @@ export interface ColorPaletteType {
     low: string;
 }
 
+export interface BorderPaletteType extends ColorPaletteType {
+    focus: string;
+}
+
 interface StylesColorsType {
     typo: ColorPaletteType;
     background: ColorPaletteType;
-    border: ColorPaletteType;
+    border: BorderPaletteType;
 }
 
 export default StylesColorsType;

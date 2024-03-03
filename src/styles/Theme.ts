@@ -15,7 +15,10 @@ const theme: ThemeType = {
         colors: {
             typo: colors,
             background: colors,
-            border: colors,
+            border: {
+                ...colors,
+                focus: "rgba(43, 141, 255)"
+            },
         }
     },
     borderRadius: {

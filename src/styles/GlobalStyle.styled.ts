@@ -1,12 +1,12 @@
 import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
 const GlobalStyles = createGlobalStyle`
+    ${reset};
+
     body {
-        font-family: 'Public Sans', sans-serif;
-        font-weight: 400;
-        font-size: 32px;
+        font: normal 400 32px 'Public Sans', sans-serif !important;
         line-height: 140%;
-        font-style: normal;
     }
 
     input:-webkit-autofill,

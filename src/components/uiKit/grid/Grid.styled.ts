@@ -6,7 +6,7 @@ const gridSpacingStep = 8;
 
 export type GridSpacing = number | string;
 
-const calcWidth = (value: number) => (`calc(100% * ${value} / 12)`);
+const calcWidth = (value: number) => (`calc(100% * (${value} / 12))`);
 
 const calculateWidth = (props: GridProps, value?: number) => {
   if (value) {
@@ -33,12 +33,12 @@ const isResponsiveGridSpacing = (value: any): value is ResponsiveGridSpacing => 
 }
 
 const calculatSpace = (value?: number) => ((value ?? 0) * gridSpacingStep);
-const calculatSpaceCss = (value?: number) => (`calc(${value}px / 2)`);
+const calculatSpaceCss = (value?: number) => `calc(${value}px / 2)`;
 const calculateMarginCss = (value: number) => `calc(${value}px / -2)`;
 
 const generateMedia = (gridSize: GridSize, styles: string): RuleSet<Object> => {
   const media = device[gridSize];
-  console.log(gridSize, media, styles);
+
   return css`
       @media ${media} {
         ${styles}
@@ -89,8 +89,8 @@ const processColumnMargin = (columnSpacing?: SpacingType) => {
 
 const processRowMargin = (rowSpacing?: SpacingType) => {
   return processSpacingStyles(rowSpacing ?? 1, (value => (`
-    margin-top: ${calculateMarginCss(value)};
-    margin-bottom: ${calculateMarginCss(value)};
+    margin-left: ${calculateMarginCss(value)};
+    margin-right: ${calculateMarginCss(value)};
   `)));
 }
 

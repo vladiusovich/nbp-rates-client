@@ -1,5 +1,5 @@
 
-export const GridSizeList = ["xs", "sm", "md","lg"] as const;
+export const GridSizeList = ["xs", "sm", "md", "lg"] as const;
 
 export type GridSize = typeof GridSizeList[number];
 

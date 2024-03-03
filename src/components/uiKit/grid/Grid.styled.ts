@@ -38,6 +38,7 @@ const calculateMarginCss = (value: number) => `calc(${value}px / -2)`;
 
 const generateMedia = (gridSize: GridSize, styles: string): RuleSet<Object> => {
   const media = device[gridSize];
+  console.log(gridSize, media, styles);
   return css`
       @media ${media} {
         ${styles}
@@ -102,14 +103,14 @@ const GridContainer = styled.div<GridProps>`
 
 const GridItem = styled.div<GridProps>`
     flex-basis: auto;
-    width: ${({ xs, ...props }) => calculateWidth(props, xs)};
     box-sizing: border-box;
+    width: ${({ xs, ...props }) => calculateWidth(props, xs)};
 
     ${(props) => processRowSpace(props.rowSpacing)};
     ${(props) => processColumnSpace(props.columnSpacing)};
 
     @media ${device.xs} {
-      width: ${({ sm, ...props }) => calculateWidth(props, sm)};
+      width: ${({ xs, ...props }) => calculateWidth(props, xs)};
 		}
 
     @media ${device.sm} {

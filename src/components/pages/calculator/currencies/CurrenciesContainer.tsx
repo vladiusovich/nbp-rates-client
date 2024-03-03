@@ -14,7 +14,7 @@ const CurrenciesContainer: React.FC<Props> = ({ isLoading, children }) => {
 		</UI.Grid>));
 
 	return (
-		<UI.Grid container rowSpacing={{ xs: 3.5, sm: 6, md: 7.5 }} columnSpacing={{ xs: 3.5, sm: 7.5 }}>
+		<UI.Grid container rowSpacing={{ xs: 3.5, sm: 6 }} columnSpacing={{ xs: 3.5, sm: 7.5 }}>
 			{isLoading
 				? loaderComponent
 				: children.map((c, i) => (<UI.Grid key={i} xs={12} sm={6} md={4} lg={3} >{c}</UI.Grid>))}

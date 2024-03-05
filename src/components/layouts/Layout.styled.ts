@@ -19,7 +19,7 @@ const S = {
 			margin: 60px 350px;
 		}
 
-        @media (min-width: ${breakpoints.lg}px) and (max-width: ${breakpoints.lg}px) {
+        @media (min-width: ${breakpoints.sm}px) and (max-width: ${breakpoints.lg}px) {
             margin: 48px 60px;
         }
     `,

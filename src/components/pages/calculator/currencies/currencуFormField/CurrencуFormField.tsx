@@ -64,7 +64,7 @@ const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onCha
 			{!hideDescription && (
 				<UI.Stack
 					direction="row"
-					gap={8}
+					gap={4}
 					wrap
 					justifyContent="flex-start"
 					alignItems="center"

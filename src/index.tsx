@@ -9,13 +9,12 @@ import ResetStyles from './styles/resetStyles';
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
-// const muiTheme = getMuiTheme();
 
 root.render(
     <React.StrictMode>
-        <ResetStyles />
-        <GlobalStyle />
         <ThemeProvider theme={Theme}>
+            <ResetStyles />
+            <GlobalStyle />
             <App />
         </ThemeProvider>
     </React.StrictMode>

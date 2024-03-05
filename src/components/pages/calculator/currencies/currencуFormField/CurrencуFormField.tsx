@@ -12,9 +12,11 @@ interface Props {
 	aToCAmount: number;
 	rateAtoC: number;
 	onChange: (currency: string, amount: number) => void;
+
+	hideDescription?: boolean;
 }
 
-const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange }) => {
+const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange, hideDescription }) => {
 	const [current, setCurrent] = useState(false);
 	const [focusValue, setFocusValue] = useState("0");
 	const [calculatedAmount, setCalculatedAmount] = useState(0);
@@ -58,17 +60,21 @@ const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onCha
 				onFocus={handleOnFocus}
 				onBlur={handleOnBlur}
 			/>
-			<UI.Stack
-				direction="row"
-				gap={8}
-				wrap
-				justifyContent="flex-start"
-				alignItems="center"
-			>
-				<typography.gray>{`1 ${rate.currency}`}</typography.gray>
-				<typography.gray>=</typography.gray>
-				<typography.small>{rate.mid} zł</typography.small>
-			</UI.Stack>
+
+			{!hideDescription && (
+				<UI.Stack
+					direction="row"
+					gap={8}
+					wrap
+					justifyContent="flex-start"
+					alignItems="center"
+				>
+					<typography.gray>{`1 ${rate.currency}`}</typography.gray>
+					<typography.gray>=</typography.gray>
+					<typography.small>{rate.mid} zł</typography.small>
+				</UI.Stack>
+			)}
+
 		</UI.Stack>
 	);
 };

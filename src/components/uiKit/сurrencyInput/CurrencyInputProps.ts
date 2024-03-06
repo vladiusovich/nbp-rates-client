@@ -68,13 +68,6 @@ export type CurrencyInputProps = Overwrite<
     className?: string;
 
     /**
-     * Custom component
-     *
-     * Default = <input/>
-     */
-    customInput?: ElementType;
-
-    /**
      * Limit length of decimals allowed
      *
      * Default = 2

@@ -13,12 +13,12 @@ interface CurrencyFieldProps {
 const CurrencyField: React.FC<CurrencyFieldProps> = ({ code, value, onChange, onFocus, onBlur }) => {
 	const [inFocus, setInFocus] = useState(false);
 
-	const onFocusHandle= () => {
+	const handleOnFocus = () => {
 		setInFocus(true);
 		onFocus?.();
 	};
 
-	const onBlurHandle= () => {
+	const handleOnBlur = () => {
 		setInFocus(false);
 		onBlur?.();
 	};
@@ -40,8 +40,8 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({ code, value, onChange, on
 			startAdornment={(<UI.FlagIcon code={code} />)}
 			// startAdornment={(<UI.CurrencyFlagIcon currency={code} size="md" />)}
 			onValueChange={handleOnValueChange}
-			onFocus={() => onFocusHandle()}
-			onBlur={() => onBlurHandle()}
+			onFocus={() => handleOnFocus()}
+			onBlur={() => handleOnBlur()}
 			$grayInput={isGray}
 		/>
 	);

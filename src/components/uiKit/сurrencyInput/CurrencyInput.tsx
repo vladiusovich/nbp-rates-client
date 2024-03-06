@@ -33,7 +33,6 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             id,
             name,
             className,
-            customInput,
             decimalsLimit,
             defaultValue,
             disabled = false,
@@ -375,11 +374,6 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             ...props,
         };
 
-        if (customInput) {
-            const CustomInput = customInput;
-            return <CustomInput {...inputProps} />;
-        }
-
         return (
             <S.container>
                 {startAdornment && (
@@ -387,6 +381,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
                         {startAdornment}
                     </S.startAdornmentContainer>)
                 }
+
                 <S.input {...inputProps} />
 
                 {endAdornment && (

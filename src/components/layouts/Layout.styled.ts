@@ -2,7 +2,6 @@
 import styled from "styled-components";
 import UI from "../uiKit";
 import device from "@device";
-import breakpoints from "../../styles/media/breakpoints";
 
 const S = {
     container: styled.main`
@@ -18,8 +17,8 @@ const S = {
 			margin: 60px 350px;
 		}
 
-        @media (min-width: ${breakpoints.sm}px) and (max-width: ${breakpoints.lg}px) {
-            margin: 48px 60px;
+        @media ${device.sm}  {
+            margin: 60px 48px;
         }
     `,
 

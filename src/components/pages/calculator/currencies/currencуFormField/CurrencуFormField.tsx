@@ -24,7 +24,7 @@ const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onCha
 
 	useEffect(() => {
 		const crossRate = calculateCrossRate(rateAtoC, rate.mid);
-		const amount = roundNumber(crossRate * aToCAmount, 4);
+		const amount = roundNumber(crossRate * aToCAmount, 2);
 		setCalculatedAmount(amount);
 	}, [rateAtoC, rate.mid, aToCAmount]);
 

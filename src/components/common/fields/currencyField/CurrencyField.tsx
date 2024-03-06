@@ -32,7 +32,7 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({ code, value, onChange, on
 	return (
 		<S.currencyInput
 			value={value}
-			decimalsLimit={4}
+			decimalsLimit={2}
 			allowNegativeValue={false}
 			maxLength={20}
 			step={10}

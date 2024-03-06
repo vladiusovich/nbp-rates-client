@@ -36,8 +36,8 @@ const S = {
         padding: 16px 16px;
 
         ${hoverAndFocusStyles}
+        background-color: ${({ theme }) => theme.light.colors.background.peak};
 
-        background-color: transparent !important;
         border: 1px solid;
         border-radius: ${({ theme }) => theme.borderRadius.regular};
         border-color: ${({ theme }) => theme.light.colors.border.high};

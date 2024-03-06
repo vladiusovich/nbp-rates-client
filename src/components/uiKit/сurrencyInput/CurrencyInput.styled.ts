@@ -66,6 +66,7 @@ const S = {
         background-color: transparent !important;
         border-color: transparent !important;
 
+        font-family: inherit;
         font-size: 32px;
         color: ${({ theme }) => theme.light.colors.typo.high};
         ${({ $grayInput = false }) => ($grayInput ? grayInputColor : normalInputColor)};

@@ -5,8 +5,8 @@ import { urls } from "@api/urls";
 import ExchangeRate from "@type/exchangerates/ExchangeRate";
 import CurrencуFormField from "./currencуFormField/CurrencуFormField";
 import CurrenciesContainer from "./CurrenciesContainer";
-import Rate from "@type/exchangerates/Rate";
 import ErrorContent from "@common/error/ErrorContent";
+import { addExtraCurrencies, filterActualCurrencies } from "@helpers/currencies";
 
 const Currencies: React.FC = () => {
 	const [atoCAmount, setAtoCAmount] = useState(1);
@@ -20,13 +20,7 @@ const Currencies: React.FC = () => {
 		return (<ErrorContent message={error.message} />);
 	}
 
-	const plnRate: Rate = {
-		code: "PLN",
-		currency: "polski złoty",
-		mid: 1,
-	};
-
-	const rates = [plnRate, ...exchangeRate?.rates ?? []];
+	const rates = filterActualCurrencies(addExtraCurrencies(exchangeRate?.rates ?? []));
 
 	const handleOnChangeCurrency = (currency: string, amount: number) => {
 		const rateAtoC = rates.find(c => c.code === currency)?.mid ?? 0;

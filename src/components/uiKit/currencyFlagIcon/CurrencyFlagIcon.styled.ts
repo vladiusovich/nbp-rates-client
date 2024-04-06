@@ -10,6 +10,7 @@ export const S = {
     currencyFlagImage: styled.div <Props>`
         vertical-align: middle;
         background-image: url('${({ $imgUrl }) => $imgUrl}');
+        background-position: 0px -3px;
         background-size: cover;
         display: inline-block;
         height: ${({ $height }) => $height}px;

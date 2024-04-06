@@ -65,8 +65,7 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({
 			maxLength={20}
 			step={10}
 			groupSeparator={" "}
-			// startAdornment={(<UI.CurrencyFlagIcon currency={code} size="md" />)}
-			startAdornment={(<UI.FlagIcon code={code} />)}
+			startAdornment={(<UI.CurrencyFlagIcon currency={code} size="md" />)}
 			endAdornment={resetButton}
 			onValueChange={handleOnValueChange}
 			onFocus={() => handleOnFocus()}

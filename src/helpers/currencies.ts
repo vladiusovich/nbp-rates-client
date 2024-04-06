@@ -15,7 +15,8 @@ export const addExtraCurrencies = (rates: Rate[]): Rate[] => {
 };
 
 // TODO: move to external config
-const countryCodes: string[] = ["PLN", "USD", "EUR", "GBP", "CZK", "JPY", "CHF", "UAH", "HUF", "NOK", "CNY"]
+const countryCodes: string[] = ["PLN", "USD", "EUR", "GBP", "CZK", "CAD", "UAH", "HUF", "SEK", "DKK", "NOK", "CHF", "CNY", "JPY"]
+// const countryCodes: string[] = ["PLN"]
 
 const sortCurrencies = (rates: Rate[]): Rate[] => {
     return rates.sort((a, b) => (countryCodes.indexOf(a.code) - countryCodes.indexOf(b.code)));

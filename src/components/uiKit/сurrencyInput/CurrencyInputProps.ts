@@ -1,4 +1,4 @@
-import React, { ElementType } from 'react';
+import React from 'react';
 
 type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U;
 
@@ -44,6 +44,13 @@ export type CurrencyInputProps = Overwrite<
      * Default = true
      */
     allowDecimals?: boolean;
+
+    /**
+     * Showan empty string when value is zero
+     *
+     * Default = false
+     */
+    zeroAsEmptyString?: boolean;
 
     /**
      * Allow user to enter negative value
@@ -136,7 +143,7 @@ export type CurrencyInputProps = Overwrite<
     /**
     * Include a startAdornment
     */
-      endAdornment?: React.JSX.Element | React.JSX.Element[];
+    endAdornment?: React.JSX.Element | React.JSX.Element[] | null;
     /**
      * Incremental value change on arrow down and arrow up key press
      */

@@ -1,6 +1,8 @@
 import UI, { CurrencyInputProps } from "@ui";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import S from "./CurrencyField.styled";
+import { ReactComponent as CloseIcon } from "@resources/icons/close.svg";
+
 
 interface CurrencyFieldProps {
 	code: string;
@@ -10,8 +12,15 @@ interface CurrencyFieldProps {
 	onBlur: () => void;
 }
 
-const CurrencyField: React.FC<CurrencyFieldProps> = ({ code, value, onChange, onFocus, onBlur }) => {
+const CurrencyField: React.FC<CurrencyFieldProps> = ({
+	code,
+	value,
+	onChange,
+	onFocus,
+	onBlur,
+}) => {
 	const [inFocus, setInFocus] = useState(false);
+	const ref = useRef<HTMLInputElement | null>(null);
 
 	const handleOnFocus = () => {
 		setInFocus(true);
@@ -27,18 +36,38 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({ code, value, onChange, on
 		onChange?.(_value ?? "", _values?.float ?? 0);
 	};
 
-    const isGray = !inFocus && (value && (+value ?? 0)) === 0;
+	const handleOnReset = () => {
+		ref?.current?.focus();
+		onChange?.("0", 0);
+	};
+
+	const isGray = !inFocus;
+
+	const _value = +(value ?? 0);
+
+	const zeroAsEmptyString = inFocus && _value === 0;
+
+	const resetButton = (inFocus && _value > 0)
+		? (
+			<UI.IconButton onClick={() => (handleOnReset())}>
+				<CloseIcon />
+			</UI.IconButton>
+		)
+		: null;
 
 	return (
 		<S.currencyInput
+			ref={ref}
 			value={value}
+			zeroAsEmptyString={zeroAsEmptyString}
 			decimalsLimit={2}
 			allowNegativeValue={false}
 			maxLength={20}
 			step={10}
 			groupSeparator={" "}
-			startAdornment={(<UI.FlagIcon code={code} />)}
 			// startAdornment={(<UI.CurrencyFlagIcon currency={code} size="md" />)}
+			startAdornment={(<UI.FlagIcon code={code} />)}
+			endAdornment={resetButton}
 			onValueChange={handleOnValueChange}
 			onFocus={() => handleOnFocus()}
 			onBlur={() => handleOnBlur()}

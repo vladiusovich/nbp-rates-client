@@ -25,10 +25,12 @@
       "@mixins": ["./src/styles/typography/Typography.styled"],
       "@type/*": ["./src/types/*"],
       "@hook/*": ["./src/hooks/*"],
+      "@styles/*": ["./src/styles/*"],
       "@api/*": ["./src/api/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@common/*": ["./src/components/common/*"],
       "@device": ["./src/styles/media/device"],
+      "@resources": ["./src/resources/*"],
     }
   },
   "include": [

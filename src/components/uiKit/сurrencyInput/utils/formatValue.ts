@@ -52,6 +52,13 @@ export type FormatValueOptions = {
    * Suffix
    */
   suffix?: string;
+
+  /**
+ * Decimal separator
+ *
+ * Default = '.'
+ */
+  zeroAsEmptyString?: boolean;
 };
 
 /**
@@ -60,6 +67,7 @@ export type FormatValueOptions = {
 export const formatValue = (options: FormatValueOptions): string => {
   const {
     value: _value,
+    zeroAsEmptyString,
     decimalSeparator,
     intlConfig,
     decimalScale,
@@ -68,6 +76,10 @@ export const formatValue = (options: FormatValueOptions): string => {
   } = options;
 
   if (_value === '' || _value === undefined) {
+    return '';
+  }
+
+  if (zeroAsEmptyString && _value === '0') {
     return '';
   }
 
@@ -95,15 +107,15 @@ export const formatValue = (options: FormatValueOptions): string => {
 
   const numberFormatter = intlConfig
     ? new Intl.NumberFormat(
-        intlConfig.locale,
-        intlConfig.currency
-          ? {
-              ...defaultNumberFormatOptions,
-              style: 'currency',
-              currency: intlConfig.currency,
-            }
-          : defaultNumberFormatOptions
-      )
+      intlConfig.locale,
+      intlConfig.currency
+        ? {
+          ...defaultNumberFormatOptions,
+          style: 'currency',
+          currency: intlConfig.currency,
+        }
+        : defaultNumberFormatOptions
+    )
     : new Intl.NumberFormat(undefined, defaultNumberFormatOptions);
 
   const parts = numberFormatter.formatToParts(Number(value));

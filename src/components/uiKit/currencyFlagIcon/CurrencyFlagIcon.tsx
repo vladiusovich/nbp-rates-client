@@ -1,5 +1,6 @@
-import flags from './flags';
 import S from './CurrencyFlagIcon.styled';
+
+const imageSrc = `./assets/icons/currencies/`;
 
 export type CurrencyFlagSizesType = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -8,7 +9,8 @@ export interface ICurrencyFlagProps {
     size: CurrencyFlagSizesType;
 }
 
-const getCurrencyImage = (currency: string) => flags[currency.toLowerCase() as keyof typeof flags] ?? flags.$$$;
+// const getCurrencyImage = (currency: string) => flags[currency.toLowerCase() as keyof typeof flags] ?? flags.$$$;
+const getCurrencyImage = (currency: string) => `${imageSrc}/${currency.toLowerCase}.png`;
 
 export const sizes: Record<CurrencyFlagSizesType, number> = {
     sm: 16,
@@ -25,12 +27,12 @@ const defineSize = (size: CurrencyFlagSizesType) => {
 }
 
 const CurrencyFlagImage: React.FC<ICurrencyFlagProps> = ({ currency, size }) => {
-    const imageSrc = getCurrencyImage(currency);
+    const image = getCurrencyImage(currency);
     const { width, height } = defineSize(size);
 
     return (
         <S.currencyFlagImage
-            $imgUrl={imageSrc}
+            $imgUrl={image}
             $width={width}
             $height={height}
         />

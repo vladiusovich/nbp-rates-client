@@ -1,6 +1,15 @@
 import { formatValue } from '../formatValue';
 
 describe('formatValue', () => {
+  it('should return empty if value is zero', () => {
+    expect(
+      formatValue({
+        value: '',
+        zeroAsEmptyString: true,
+      })
+    ).toEqual('');
+  });
+
   it('should return empty if blank value', () => {
     expect(
       formatValue({

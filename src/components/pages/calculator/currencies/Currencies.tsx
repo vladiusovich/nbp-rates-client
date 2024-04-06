@@ -36,7 +36,6 @@ const Currencies: React.FC = () => {
 			rateAtoC={rateAtoC}
 			aToCAmount={atoCAmount}
 			onChange={handleOnChangeCurrency}
-			hideDescription={r.code === "PLN"}
 		/>
 	));
 

@@ -12,11 +12,14 @@ interface Props {
 	aToCAmount: number;
 	rateAtoC: number;
 	onChange: (currency: string, amount: number) => void;
-
-	hideDescription?: boolean;
 }
 
-const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onChange, hideDescription }) => {
+const CurrencуFormField: React.FC<Props> = ({
+	rate,
+	rateAtoC,
+	aToCAmount,
+	onChange,
+}) => {
 	const [current, setCurrent] = useState(false);
 	const [focusValue, setFocusValue] = useState("0");
 	const [calculatedAmount, setCalculatedAmount] = useState(0);
@@ -45,9 +48,7 @@ const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onCha
 		setFocusValue(calculatedAmount.toString())
 	};
 
-	const handleOnBlur = () => {
-		setCurrent(false);
-	};
+	const handleOnBlur = () => (setCurrent(false));
 
 	const amount = current ? focusValue : calculatedAmount;
 
@@ -60,21 +61,17 @@ const CurrencуFormField: React.FC<Props> = ({ rate, rateAtoC, aToCAmount, onCha
 				onFocus={handleOnFocus}
 				onBlur={handleOnBlur}
 			/>
-
-			{!hideDescription && (
-				<UI.Stack
-					direction="row"
-					gap={4}
-					wrap
-					justifyContent="flex-start"
-					alignItems="center"
-				>
-					<typography.gray>{`1 ${rate.currency}`}</typography.gray>
-					<typography.gray>=</typography.gray>
-					<typography.small>{rate.mid} zł</typography.small>
-				</UI.Stack>
-			)}
-
+			<UI.Stack
+				direction="row"
+				gap={4}
+				wrap
+				justifyContent="flex-start"
+				alignItems="center"
+			>
+				<typography.gray>{`1 ${rate.currency}`}</typography.gray>
+				<typography.gray>=</typography.gray>
+				<typography.small>{rate.mid} zł</typography.small>
+			</UI.Stack>
 		</UI.Stack>
 	);
 };

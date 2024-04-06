@@ -30,6 +30,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
         {
             allowDecimals = true,
             allowNegativeValue = true,
+            zeroAsEmptyString = false,
             id,
             name,
             className,
@@ -87,6 +88,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
         }
 
         const formatValueOptions: Partial<FormatValueOptions> = {
+            zeroAsEmptyString,
             decimalSeparator,
             groupSeparator,
             disableGroupSeparators,
@@ -201,6 +203,8 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             return stateValue ? stateValue.length : 0;
         };
 
+        const refEndAdornment = useRef<HTMLInputElement | null>(null);
+
         /**
          * Handle blur event
          *
@@ -210,6 +214,13 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             const {
                 target: { value },
             } = event;
+
+            const a = event.relatedTarget;
+            const b = refEndAdornment?.current;
+            // TODO: bug. When switch current input using key 'tab' blur does not trigger
+            if ((!!a && !!b) && a?.parentElement?.className === b?.className) {
+                return;
+            }
 
             const valueOnly = cleanValue({ value, ...cleanValueOptions });
 
@@ -385,7 +396,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
                 <S.input {...inputProps} />
 
                 {endAdornment && (
-                    <S.endAdornmentContainer>
+                    <S.endAdornmentContainer ref={refEndAdornment}>
                         {endAdornment}
                     </S.endAdornmentContainer>)
                 }

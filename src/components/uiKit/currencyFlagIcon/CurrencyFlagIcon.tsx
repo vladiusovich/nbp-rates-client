@@ -1,6 +1,6 @@
 import S from './CurrencyFlagIcon.styled';
 
-const imageSrc = `./assets/icons/currencies/`;
+const imageSrc = `./assets/icons/currencies`;
 
 export type CurrencyFlagSizesType = 'sm' | 'md' | 'lg' | 'xl';
 

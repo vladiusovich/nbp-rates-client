@@ -22,6 +22,11 @@ import {
 } from './utils';
 import S from './CurrencyInput.styled';
 
+/* TODO: refactor the component:
+    -remove unused fetures
+    -split some features
+    -improve adornment elements (hove/blur event)
+*/
 export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
     HTMLInputElement,
     CurrencyInputProps
@@ -98,17 +103,14 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             }
         );
 
-        const _stateValue = userValue != null
-            ? formatValue(
-                {
-                    ...getformatValueOptions(zeroAsEmptyString),
-                    decimalScale,
-                    value: String(zeroAsEmptyString && userValue === "0" ? '' : userValue)
-                })
-            : '';
-
         const [inFocus, setInFocus] = useState(false);
-        const [stateValue, setStateValue] = useState(_stateValue);
+        const [userStartedType, setUserStartedType] = useState(false);
+        const [stateValue, setStateValue] = useState(formatValue(
+            {
+                ...getformatValueOptions(zeroAsEmptyString),
+                decimalScale,
+                value: String(userValue ?? "")
+            }));
 
         const [dirty, setDirty] = useState(false);
         const [cursor, setCursor] = useState(0);
@@ -145,7 +147,6 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             });
 
             const stringValue = cleanValue({ value: modifiedValue, ...cleanValueOptions });
-            console.log("stringValue", stringValue);
 
             if (userMaxLength && stringValue.replace(/-/g, '').length > userMaxLength) {
                 return;
@@ -171,8 +172,6 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
                 value: stringValue,
                 ...o,
             });
-
-            console.log("formattedValue", formattedValue);
 
             if (cursorPosition != null) {
                 // Prevent cursor jumping
@@ -222,14 +221,15 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
                 target: { value },
             } = event;
 
-            setInFocus(false);
-
             const a = event.relatedTarget;
             const b = refEndAdornment?.current;
             // TODO: bug. When switch current input using key 'tab' blur does not trigger
             if ((!!a && !!b) && a?.parentElement?.className === b?.className) {
                 return;
             }
+
+            setUserStartedType(false);
+            setInFocus(false);
 
             const valueOnly = cleanValue({ value, ...cleanValueOptions });
 
@@ -276,6 +276,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             const { key } = event;
 
             setLastKeyStroke(key);
+            setUserStartedType(true);
 
             if (step && (key === 'ArrowUp' || key === 'ArrowDown')) {
                 event.preventDefault();
@@ -337,12 +338,20 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             onKeyUp?.(event);
         };
 
-        // Update state if userValue changes to undefined
         useEffect(() => {
-            if (userValue == null) {
+            // Update state if userValue changes to undefined/0/"" in fucused state of element
+            if ((userValue === null || userValue === "0" || userValue === "") && inFocus) {
                 setStateValue('');
+                setUserStartedType(false);
+                return;
             }
-        }, [userValue]);
+
+            // Update state if userValue changes to undefined
+            if (userValue === null) {
+                setStateValue('');
+                setUserStartedType(false);
+            }
+        }, [inFocus, userValue]);
 
         useEffect(() => {
             // prevent cursor jumping if editing value
@@ -356,25 +365,29 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             }
         }, [stateValue, cursor, inputRef, dirty, changeCount]);
 
+        // if user focoses on element but does not set any value show empty field
+        const renderZeroAsEmptyString = () => {
+            return (formatValueOptions.zeroAsEmptyString &&
+                (stateValue === "0" || stateValue === "") &&
+                inFocus &&
+                !userStartedType)
+                ?? true;
+        }
+
         /**
          * If user has only entered "-" or decimal separator,
          * keep the char to allow them to enter next value
          */
-
-        const isFirstZero = () => {
-            console.log(stateValue, inFocus);
-
-            return formatValueOptions.zeroAsEmptyString && stateValue === "0" && inFocus;
-        }
-
         const getRenderValue = () => {
             const isValidValue = userValue != null && stateValue !== '-' && stateValue !== decimalSeparator;
+            const _allowRenderZero = renderZeroAsEmptyString();
 
-            return isValidValue && !isFirstZero() ? formatValue({
-                ...formatValueOptions,
-                decimalScale: dirty ? undefined : decimalScale,
-                value: String(userValue),
-            }) : stateValue;
+            return isValidValue
+                ? formatValue({
+                    ...getformatValueOptions(_allowRenderZero),
+                    decimalScale: dirty ? undefined : decimalScale,
+                    value: String(userValue),
+                }) : stateValue;
         };
 
         const inputProps: React.ComponentPropsWithRef<'input'> = {

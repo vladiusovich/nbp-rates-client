@@ -45,8 +45,6 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({
 
 	const _value = +(value ?? 0);
 
-	const zeroAsEmptyString = inFocus && _value === 0;
-
 	const resetButton = (inFocus && _value > 0)
 		? (
 			<UI.IconButton onClick={() => (handleOnReset())}>
@@ -59,7 +57,7 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({
 		<S.currencyInput
 			ref={ref}
 			value={value}
-			zeroAsEmptyString={zeroAsEmptyString}
+			zeroAsEmptyString
 			decimalsLimit={2}
 			allowNegativeValue={false}
 			maxLength={20}

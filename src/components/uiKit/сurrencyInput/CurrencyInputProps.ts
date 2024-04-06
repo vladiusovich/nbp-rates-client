@@ -91,11 +91,6 @@ export type CurrencyInputProps = Overwrite<
     decimalScale?: number;
 
     /**
-     * Default value if not passing in value via props
-     */
-    defaultValue?: number | string;
-
-    /**
      * Disabled
      *
      * Default = false

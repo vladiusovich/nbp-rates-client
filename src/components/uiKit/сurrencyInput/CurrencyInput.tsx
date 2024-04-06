@@ -7,7 +7,7 @@ import React, {
     useMemo,
     useImperativeHandle,
 } from 'react';
-import { CurrencyInputProps, CurrencyInputOnChangeValues } from './CurrencyInputProps';
+import { CurrencyInputProps } from './CurrencyInputProps';
 import {
     isNumber,
     cleanValue,
@@ -35,7 +35,6 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             name,
             className,
             decimalsLimit,
-            defaultValue,
             disabled = false,
             maxLength: userMaxLength,
             value: userValue,
@@ -87,15 +86,38 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             throw new Error('decimalSeparator cannot be the same as groupSeparator');
         }
 
-        const formatValueOptions: Partial<FormatValueOptions> = {
-            zeroAsEmptyString,
-            decimalSeparator,
-            groupSeparator,
-            disableGroupSeparators,
-            intlConfig,
-            prefix: prefix || localeConfig.prefix,
-            suffix: suffix,
-        };
+        const getformatValueOptions = (zeroAsEmptyString: boolean): Partial<FormatValueOptions> => (
+            {
+                zeroAsEmptyString: zeroAsEmptyString,
+                decimalSeparator,
+                groupSeparator,
+                disableGroupSeparators,
+                intlConfig,
+                prefix: prefix || localeConfig.prefix,
+                suffix: suffix,
+            }
+        );
+
+        const _stateValue = userValue != null
+            ? formatValue(
+                {
+                    ...getformatValueOptions(zeroAsEmptyString),
+                    decimalScale,
+                    value: String(zeroAsEmptyString && userValue === "0" ? '' : userValue)
+                })
+            : '';
+
+        const [inFocus, setInFocus] = useState(false);
+        const [stateValue, setStateValue] = useState(_stateValue);
+
+        const [dirty, setDirty] = useState(false);
+        const [cursor, setCursor] = useState(0);
+        const [changeCount, setChangeCount] = useState(0);
+        const [lastKeyStroke, setLastKeyStroke] = useState<string | null>(null);
+        const inputRef = useRef<HTMLInputElement>(null);
+        useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
+
+        const formatValueOptions = getformatValueOptions(zeroAsEmptyString);
 
         const cleanValueOptions: Partial<CleanValueOptions> = {
             decimalSeparator,
@@ -107,20 +129,6 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             prefix: prefix || localeConfig.prefix,
             transformRawValue,
         };
-
-        const [stateValue, setStateValue] = useState(() =>
-            defaultValue != null
-                ? formatValue({ ...formatValueOptions, decimalScale, value: String(defaultValue) })
-                : userValue != null
-                    ? formatValue({ ...formatValueOptions, decimalScale, value: String(userValue) })
-                    : ''
-        );
-        const [dirty, setDirty] = useState(false);
-        const [cursor, setCursor] = useState(0);
-        const [changeCount, setChangeCount] = useState(0);
-        const [lastKeyStroke, setLastKeyStroke] = useState<string | null>(null);
-        const inputRef = useRef<HTMLInputElement>(null);
-        useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
         /**
          * Process change in value
@@ -137,13 +145,14 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             });
 
             const stringValue = cleanValue({ value: modifiedValue, ...cleanValueOptions });
+            console.log("stringValue", stringValue);
 
             if (userMaxLength && stringValue.replace(/-/g, '').length > userMaxLength) {
                 return;
             }
 
             if (stringValue === '' || stringValue === '-' || stringValue === decimalSeparator) {
-                onValueChange && onValueChange(undefined, name, { float: null, formatted: '', value: '' });
+                onValueChange?.(undefined, name, { float: null, formatted: '', value: '' });
                 setStateValue(stringValue);
                 // Always sets cursor after '-' or decimalSeparator input
                 setCursor(1);
@@ -156,10 +165,14 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
 
             const numberValue = parseFloat(stringValueWithoutSeparator);
 
+            const o = getformatValueOptions(zeroAsEmptyString && inFocus && stringValue === "");
+
             const formattedValue = formatValue({
                 value: stringValue,
-                ...formatValueOptions,
+                ...o,
             });
+
+            console.log("formattedValue", formattedValue);
 
             if (cursorPosition != null) {
                 // Prevent cursor jumping
@@ -172,34 +185,28 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
 
             setStateValue(formattedValue);
 
-            if (onValueChange) {
-                const values: CurrencyInputOnChangeValues = {
-                    float: numberValue,
-                    formatted: formattedValue,
-                    value: stringValue,
-                };
-                onValueChange(stringValue, name, values);
-            }
+            onValueChange?.(stringValue, name, {
+                float: numberValue,
+                formatted: formattedValue,
+                value: stringValue,
+            });
         };
 
         /**
          * Handle change event
          */
         const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-            const {
-                target: { value, selectionStart },
-            } = event;
-
-            processChange(value, selectionStart);
-
-            onChange && onChange(event);
+            processChange(event.target.value, event.target.selectionStart);
+            onChange?.(event);
         };
 
         /**
          * Handle focus event
          */
         const handleOnFocus = (event: React.FocusEvent<HTMLInputElement>): number => {
-            onFocus && onFocus(event);
+            setInFocus(true);
+
+            onFocus?.(event);
             return stateValue ? stateValue.length : 0;
         };
 
@@ -215,6 +222,8 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
                 target: { value },
             } = event;
 
+            setInFocus(false);
+
             const a = event.relatedTarget;
             const b = refEndAdornment?.current;
             // TODO: bug. When switch current input using key 'tab' blur does not trigger
@@ -226,7 +235,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
 
             if (valueOnly === '-' || valueOnly === decimalSeparator || !valueOnly) {
                 setStateValue('');
-                onBlur && onBlur(event);
+                onBlur?.(event);
                 return;
             }
 
@@ -300,7 +309,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
                 );
             }
 
-            onKeyDown && onKeyDown(event);
+            onKeyDown?.(event);
         };
 
         /**
@@ -325,15 +334,15 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
                 }
             }
 
-            onKeyUp && onKeyUp(event);
+            onKeyUp?.(event);
         };
 
         // Update state if userValue changes to undefined
         useEffect(() => {
-            if (userValue == null && defaultValue == null) {
+            if (userValue == null) {
                 setStateValue('');
             }
-        }, [defaultValue, userValue]);
+        }, [userValue]);
 
         useEffect(() => {
             // prevent cursor jumping if editing value
@@ -351,20 +360,21 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
          * If user has only entered "-" or decimal separator,
          * keep the char to allow them to enter next value
          */
-        const getRenderValue = () => {
-            if (
-                userValue != null &&
-                stateValue !== '-' &&
-                (!decimalSeparator || stateValue !== decimalSeparator)
-            ) {
-                return formatValue({
-                    ...formatValueOptions,
-                    decimalScale: dirty ? undefined : decimalScale,
-                    value: String(userValue),
-                });
-            }
 
-            return stateValue;
+        const isFirstZero = () => {
+            console.log(stateValue, inFocus);
+
+            return formatValueOptions.zeroAsEmptyString && stateValue === "0" && inFocus;
+        }
+
+        const getRenderValue = () => {
+            const isValidValue = userValue != null && stateValue !== '-' && stateValue !== decimalSeparator;
+
+            return isValidValue && !isFirstZero() ? formatValue({
+                ...formatValueOptions,
+                decimalScale: dirty ? undefined : decimalScale,
+                value: String(userValue),
+            }) : stateValue;
         };
 
         const inputProps: React.ComponentPropsWithRef<'input'> = {

@@ -75,6 +75,8 @@ export const formatValue = (options: FormatValueOptions): string => {
     suffix = '',
   } = options;
 
+  // console.log("formatValue", zeroAsEmptyString, _value);
+
   if (_value === '' || _value === undefined) {
     return '';
   }

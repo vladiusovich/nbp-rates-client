@@ -50,14 +50,20 @@ const S = {
     `,
     input: styled.input <{ $grayInput?: boolean }>`
         * {
-            outline: none;
-            border: none;
+            outline: none !important;
+            border: none !important;
         }
 
+        &:focus,
+        &:focus-within,
+        &:active,
+        &:target,
+        &:hover,
+        &:visited,
         &:focus-visible {
-            outline-offset: 0px;
-            outline-width: 0;
+            outline: none !important;
         }
+
         width: 100%;
         height: inherit;
 

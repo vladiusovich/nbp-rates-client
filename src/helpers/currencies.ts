@@ -1,4 +1,5 @@
 import Rate from "@type/exchangerates/Rate";
+import dynamicConfig from "@config";
 
 export const getInverseRate = (rate: number): number => (1 / rate);
 
@@ -14,16 +15,12 @@ export const addExtraCurrencies = (rates: Rate[]): Rate[] => {
     return [plnRate, ...rates ?? []];
 };
 
-// TODO: move to external config
-const countryCodes: string[] = ["PLN", "USD", "EUR", "GBP", "CZK", "CAD", "UAH", "HUF", "SEK", "DKK", "NOK", "CHF", "CNY", "JPY"]
-// const countryCodes: string[] = ["PLN"]
+const visibleCurrencies = dynamicConfig.visibleCurrencies ?? ["PLN"];
 
 const sortCurrencies = (rates: Rate[]): Rate[] => {
-    return rates.sort((a, b) => (countryCodes.indexOf(a.code) - countryCodes.indexOf(b.code)));
+    return rates.sort((a, b) => (visibleCurrencies.indexOf(a.code) - visibleCurrencies.indexOf(b.code)));
 };
 
 export const filterActualCurrencies = (rates: Rate[]): Rate[] => {
-    return sortCurrencies(rates.filter(r => countryCodes.includes(r.code)));
+    return sortCurrencies(rates.filter(r => visibleCurrencies.includes(r.code)));
 };
-
-

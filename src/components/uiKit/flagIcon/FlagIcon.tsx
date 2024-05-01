@@ -7,7 +7,7 @@ const flagEmojiForCode = (code: string) => {
     return String.fromCodePoint(h, l)
 }
 
-// TODO: Windows does not support EMOJI
+// Windows OS < 11 does not support EMOJI
 const FlagIcon: React.FC<{ code: string }> = ({ code }) => {
     const cachedFlag = useMemo(() => flagEmojiForCode(code), [code])
 

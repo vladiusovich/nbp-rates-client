@@ -1,5 +1,6 @@
-// export const baseUrl = 'https://pokeapi.co/api/v2'
-export const baseUrl = 'https://api.nbp.pl/api'
+import dynamicConfig from "@config";
+
+export const baseUrl = dynamicConfig.serverUrl;
 
 const url = (relative: string) => (`${baseUrl}/${relative}`);
 

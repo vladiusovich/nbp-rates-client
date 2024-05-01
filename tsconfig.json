@@ -53,6 +53,9 @@
             "@resources": [
                 "./src/resources/*"
             ],
+            "@config": [
+                "./src/config/appConfig"
+            ],
         }
     },
     "include": [

@@ -14,6 +14,7 @@ const alias = {
     '@common': resolve(__dirname, `${basePath}/components/common`),
     '@device': resolve(__dirname, `${basePath}/styles/media/device`),
     '@resources': resolve(__dirname, `${basePath}/resources`),
+    '@config': resolve(__dirname, `${basePath}/config/appConfig`),
 };
 
 export default alias;

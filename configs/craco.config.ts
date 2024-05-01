@@ -10,13 +10,5 @@ export const webpack = {
         chunkFilename: "[id].[chunkhash].js",
     },
     alias: alias,
-    resolve: {
-        // extensions: [".tsx", ".ts", ".js"],
-    },
-    plugins: {
-        add: [ /* ... */],
-        remove: [ /* ... */],
-    },
-    configure: { /* ... */ },
 };
 

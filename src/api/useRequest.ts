@@ -1,12 +1,6 @@
 import useSwr from 'swr'
 import fetcher from './fetcher';
 
-type RequestStateType<T> = {
-    data?: T;
-    error: any;
-    isLoading: boolean;
-};
-
 type RequestPayloadType = {
     [s: string]: string;
 };

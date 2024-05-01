@@ -1,40 +1,62 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "paths": {
-      "@ui": ["./src/components/uiKit/index"],
-      "@typography": ["./src/styles/typography/index"],
-      "@mixins": ["./src/styles/typography/Typography.styled"],
-      "@type/*": ["./src/types/*"],
-      "@hook/*": ["./src/hooks/*"],
-      "@styles/*": ["./src/styles/*"],
-      "@api/*": ["./src/api/*"],
-      "@helpers/*": ["./src/helpers/*"],
-      "@common/*": ["./src/components/common/*"],
-      "@device": ["./src/styles/media/device"],
-      "@resources": ["./src/resources/*"],
-    }
-  },
-  "include": [
-    "src",
-    "craco.config.ts"
-  ]
+    "compilerOptions": {
+        "target": "ES2020",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "paths": {
+            "@ui": [
+                "./src/components/uiKit/index"
+            ],
+            "@typography": [
+                "./src/styles/typography/index"
+            ],
+            "@mixins": [
+                "./src/styles/typography/Typography.styled"
+            ],
+            "@type/*": [
+                "./src/types/*"
+            ],
+            "@hook/*": [
+                "./src/hooks/*"
+            ],
+            "@styles/*": [
+                "./src/styles/*"
+            ],
+            "@api/*": [
+                "./src/api/*"
+            ],
+            "@helpers/*": [
+                "./src/helpers/*"
+            ],
+            "@common/*": [
+                "./src/components/common/*"
+            ],
+            "@device": [
+                "./src/styles/media/device"
+            ],
+            "@resources": [
+                "./src/resources/*"
+            ],
+        }
+    },
+    "include": [
+        "src",
+        "configs/craco.config.ts"
+    ]
 }

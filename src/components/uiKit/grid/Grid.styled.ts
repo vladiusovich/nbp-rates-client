@@ -23,8 +23,6 @@ const calculateWidth = (props: GridProps, value?: number) => {
   return calcWidth(v ?? 4);
 };
 
-const isGridSpacing = (value: any): value is GridSpacing => (typeof value === 'number');
-
 const isResponsiveGridSpacing = (value: any): value is ResponsiveGridSpacing => {
   if (typeof value !== 'object' || value === null) {
     return false;

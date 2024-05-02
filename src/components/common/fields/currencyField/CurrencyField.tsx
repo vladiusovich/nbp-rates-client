@@ -3,7 +3,6 @@ import React, { useRef, useState } from "react";
 import S from "./CurrencyField.styled";
 import { ReactComponent as CloseIcon } from "@resources/icons/close.svg";
 
-
 interface CurrencyFieldProps {
 	code: string;
 	value: string | number | undefined;
@@ -41,9 +40,9 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({
 		onChange?.("0", 0);
 	};
 
-	const isGray = !inFocus;
-
 	const _value = +(value ?? 0);
+
+	const isGray = !inFocus && _value === 0;
 
 	const resetButton = (inFocus && _value > 0)
 		? (
@@ -61,7 +60,6 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({
 			decimalsLimit={2}
 			allowNegativeValue={false}
 			maxLength={20}
-			step={10}
 			groupSeparator={" "}
 			startAdornment={(<UI.CurrencyFlagIcon currency={code} size="md" />)}
 			endAdornment={resetButton}

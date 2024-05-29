@@ -22,19 +22,18 @@ const Grid: React.FC<GridProps> = ({
     if (container) {
         return (
             <S.container
-                rowSpacing={rowSpacing}
-                columnSpacing={columnSpacing}
+                $rowSpacing={rowSpacing}
+                $columnSpacing={columnSpacing}
             >
                 {cloneChildrenWithProps(children, { rowSpacing, columnSpacing })}
-                {/* {children} */}
             </S.container>
         );
     };
 
     return (
         <S.item
-            rowSpacing={rowSpacing}
-            columnSpacing={columnSpacing}
+            $rowSpacing={rowSpacing}
+            $columnSpacing={columnSpacing}
             {...props}
         >
             {children}

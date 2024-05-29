@@ -2,6 +2,7 @@ import { Children, cloneElement } from "react";
 import S from "./Grid.styled";
 import GridProps from "./GridProps";
 import React from "react";
+import { transformProps } from "../types/TransformedProps";
 
 const Grid: React.FC<GridProps> = ({
     container,
@@ -34,7 +35,7 @@ const Grid: React.FC<GridProps> = ({
         <S.item
             $rowSpacing={rowSpacing}
             $columnSpacing={columnSpacing}
-            {...props}
+            {...transformProps(props)}
         >
             {children}
         </S.item >

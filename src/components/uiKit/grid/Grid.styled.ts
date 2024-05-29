@@ -11,6 +11,7 @@ type StyledGridProps = TransformedProps<Omit<GridProps, 'container' | 'children'
 const calcWidth = (value: number) => (`calc(100% * (${value} / 12))`);
 
 const calculateWidth = (props: StyledGridProps, value?: number) => {
+
     if (value) {
         return calcWidth(value);
     }
@@ -111,7 +112,7 @@ const GridItem = styled.div<StyledGridProps>`
 
     @media ${device.xs} {
       width: ${({ $xs, ...props }) => calculateWidth(props, $xs)};
-		}
+	}
 
     @media ${device.sm} {
       width: ${({ $sm, ...props }) => calculateWidth(props, $sm)};

@@ -14,7 +14,7 @@ const Currencies: React.FC = () => {
 
 	const { data: exchangeRates, isLoading, error } = useRequest<ExchangeRate[]>(urls.exchangerates.tables, { table: "a" })
 
-	const exchangeRate = exchangeRates?.at(0);
+	const exchangeRate = exchangeRates?.[0];
 
 	if (error) {
 		return (<ErrorContent message={error.message} />);

@@ -16,8 +16,7 @@ const Title: React.FC = () => {
 
 	const loading = isLoading || !exchangeRates;
 
-	const exchangeRate = exchangeRates?.at(0);
-
+	const exchangeRate = exchangeRates?.[0];
 	const effectiveDate = getDisplayedDate(exchangeRate?.effectiveDate ?? "");
 
 	return (

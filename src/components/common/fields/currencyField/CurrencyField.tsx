@@ -1,7 +1,6 @@
 import UI, { CurrencyInputProps } from "@ui";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import S from "./CurrencyField.styled";
-import { ReactComponent as CloseIcon } from "@resources/icons/close.svg";
 
 interface CurrencyFieldProps {
 	code: string;
@@ -19,42 +18,27 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({
 	onBlur,
 }) => {
 	const [inFocus, setInFocus] = useState(false);
-	const ref = useRef<HTMLInputElement | null>(null);
 
 	const handleOnFocus = () => {
 		setInFocus(true);
 		onFocus?.();
 	};
 
-	const handleOnBlur = () => {
-		setInFocus(false);
+	const handleOnBlur = (e: any) => {
 		onBlur?.();
+		setInFocus(false);
 	};
 
 	const handleOnValueChange: CurrencyInputProps['onValueChange'] = (_value, _name, _values) => {
 		onChange?.(_value ?? "", _values?.float ?? 0);
 	};
 
-	const handleOnReset = () => {
-		ref?.current?.focus();
-		onChange?.("0", 0);
-	};
-
 	const _value = +(value ?? 0);
 
 	const isGray = !inFocus && _value === 0;
 
-	const resetButton = (inFocus && _value > 0)
-		? (
-			<UI.IconButton onClick={() => (handleOnReset())}>
-				<CloseIcon />
-			</UI.IconButton>
-		)
-		: null;
-
 	return (
 		<S.currencyInput
-			ref={ref}
 			value={value}
 			zeroAsEmptyString
 			decimalsLimit={2}
@@ -62,10 +46,10 @@ const CurrencyField: React.FC<CurrencyFieldProps> = ({
 			maxLength={20}
 			groupSeparator={" "}
 			startAdornment={(<UI.CurrencyFlagIcon currency={code} size="md" />)}
-			endAdornment={resetButton}
 			onValueChange={handleOnValueChange}
 			onFocus={() => handleOnFocus()}
-			onBlur={() => handleOnBlur()}
+			onBlur={handleOnBlur}
+			showResetButton={_value > 0}
 			$grayInput={isGray}
 		/>
 	);

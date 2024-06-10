@@ -7,6 +7,7 @@ import React, {
     useMemo,
     useImperativeHandle,
 } from 'react';
+import { ReactComponent as CloseIcon } from "@resources/icons/close.svg";
 import { CurrencyInputProps } from './CurrencyInputProps';
 import {
     isNumber,
@@ -21,6 +22,7 @@ import {
     repositionCursor,
 } from './utils';
 import S from './CurrencyInput.styled';
+import IconButton from '../iconButton/IconButton';
 
 /* TODO: refactor the component:
     -remove unused fetures
@@ -50,7 +52,6 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             prefix,
             startAdornment,
             suffix,
-            endAdornment,
             intlConfig,
             step,
             min,
@@ -64,6 +65,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             onBlur,
             onKeyDown,
             onKeyUp,
+            showResetButton,
             transformRawValue,
             formatValueOnBlur = true,
             ...props
@@ -221,13 +223,6 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
                 target: { value },
             } = event;
 
-            const a = event.relatedTarget;
-            const b = refEndAdornment?.current;
-            // TODO: bug. When switch current input using key 'tab' blur does not trigger
-            if ((!!a && !!b) && a?.parentElement?.className === b?.className) {
-                return;
-            }
-
             setUserStartedType(false);
             setInFocus(false);
 
@@ -264,7 +259,7 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
 
             setStateValue(formattedValue);
 
-            onBlur && onBlur(event);
+            onBlur?.(event);
         };
 
         /**
@@ -336,6 +331,16 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
             }
 
             onKeyUp?.(event);
+        };
+
+        const handleOnReset = () => {
+            inputRef?.current?.focus();
+
+            onValueChange?.("", name, {
+                float: 0,
+                formatted: "",
+                value: "",
+            });
         };
 
         useEffect(() => {
@@ -418,11 +423,14 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
 
                 <S.input {...inputProps} />
 
-                {endAdornment && (
-                    <S.endAdornmentContainer ref={refEndAdornment}>
-                        {endAdornment}
-                    </S.endAdornmentContainer>)
-                }
+                <S.endAdornmentContainer $show={(showResetButton ?? false) && inFocus} ref={refEndAdornment}>
+                    <IconButton
+                        // fix: Safari hide the button before click
+                        onMouseDown={(e) => (e.preventDefault())}
+                        onClick={() => handleOnReset()}>
+                        <CloseIcon />
+                    </IconButton>
+                </S.endAdornmentContainer>
             </S.container>
         );
     }

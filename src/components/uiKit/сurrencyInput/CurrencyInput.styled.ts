@@ -45,7 +45,9 @@ const S = {
     startAdornmentContainer: styled.div`
         margin-right: 12px;
     `,
-    endAdornmentContainer: styled.div`
+    endAdornmentContainer: styled.div< { $show: boolean } >`
+        ${({ $show = false }) => ($show ? `display:block` : `display:none`)};
+
         margin-left: 12px;
     `,
     input: styled.input <{ $grayInput?: boolean }>`

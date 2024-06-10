@@ -49,20 +49,7 @@ const S = {
         margin-left: 12px;
     `,
     input: styled.input <{ $grayInput?: boolean }>`
-        * {
-            outline: none !important;
-            border: none !important;
-        }
-
-        &:focus,
-        &:focus-within,
-        &:active,
-        &:target,
-        &:hover,
-        &:visited,
-        &:focus-visible {
-            outline: none !important;
-        }
+        outline-style: none !important;
 
         width: 100%;
         height: inherit;

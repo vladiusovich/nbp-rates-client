@@ -13,7 +13,10 @@ export const webpack = {
     },
     module: {
         rules: [
-            { test: /\.(png|jpe?g|gif)$/i, use: "file-loader" },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: "file-loader"
+            },
             {
                 test: /\.svg$/,
                 use: [

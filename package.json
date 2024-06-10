@@ -37,21 +37,13 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": "> 0.5%, not dead",
   "devDependencies": {
+    "@babel/cli": "^7.24.7",
+    "@babel/core": "^7.24.7",
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-react": "^7.24.1",
+    "@babel/preset-typescript": "^7.24.7",
     "@craco/craco": "^7.1.0",
     "@craco/types": "^7.1.0",
     "@types/lodash": "^4.14.202",

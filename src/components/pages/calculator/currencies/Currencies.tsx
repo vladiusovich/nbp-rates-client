@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import S from "./Currencies.styled";
 import { useRequest } from "@api/useRequest";
 import { urls } from "@api/urls";
 import ExchangeRate from "@type/exchangerates/ExchangeRate";
 import CurrencуFormField from "./currencуFormField/CurrencуFormField";
-import CurrenciesContainer from "./CurrenciesContainer";
+import CurrencyGrid from "./CurrencyGrid";
 import ErrorContent from "@common/error/ErrorContent";
 import { addExtraCurrencies, filterActualCurrencies } from "@helpers/currencies";
 
@@ -29,24 +28,18 @@ const Currencies: React.FC = () => {
 		setAtoCAmount(amount);
 	};
 
-	const currencуFields = (rates ?? []).map(r => (
-		<CurrencуFormField
-			key={r.code}
-			rate={r}
-			rateAtoC={rateAtoC}
-			aToCAmount={atoCAmount}
-			onChange={handleOnChangeCurrency}
-		/>
-	));
-
 	return (
-		<S.container>
-			<CurrenciesContainer
-				isLoading={isLoading || !exchangeRates}
-			>
-				{currencуFields}
-			</CurrenciesContainer>
-		</S.container>
+		<CurrencyGrid isLoading={isLoading || !exchangeRates}>
+			{rates.map(r => (
+				<CurrencуFormField
+					key={r.code}
+					rate={r}
+					rateAtoC={rateAtoC}
+					aToCAmount={atoCAmount}
+					onChange={handleOnChangeCurrency}
+				/>
+			))}
+		</CurrencyGrid>
 	);
 };
 

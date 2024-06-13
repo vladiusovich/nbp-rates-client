@@ -18,8 +18,6 @@ const Skeleton: React.FC<Props> = ({
     height,
     ...props
 }) => {
-    let s: React.ReactNode = <rect x="0" y="0" width={width} height={height} />;
-
     return (
         <ContentLoader
             speed={2}
@@ -29,7 +27,7 @@ const Skeleton: React.FC<Props> = ({
             foregroundColor="#bfbfbf"
             {...props}
         >
-            {s}
+            <rect x="0" y="0" width={width} height={height} />
         </ContentLoader>
     );
 };

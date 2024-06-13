@@ -7,7 +7,7 @@ interface Props {
 	children: React.ReactNode[];
 }
 
-const CurrenciesContainer: React.FC<Props> = ({ isLoading, children }) => {
+const CurrencyGrid: React.FC<Props> = ({ isLoading, children }) => {
 	const loaders = range(10).map((r, i) => (
 		<UI.Grid key={i} xs={12} sm={6} md={4} lg={3} >
 			<UI.Skeleton key={r} variant="rect" width={"100%"} height={"65"} />
@@ -22,4 +22,4 @@ const CurrenciesContainer: React.FC<Props> = ({ isLoading, children }) => {
 	);
 };
 
-export default CurrenciesContainer;
+export default CurrencyGrid;

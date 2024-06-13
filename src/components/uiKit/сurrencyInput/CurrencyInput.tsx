@@ -242,20 +242,11 @@ export const CurrencyInput: FC<CurrencyInputProps> = forwardRef<
                 decimalScale !== undefined ? decimalScale : fixedDecimalLength
             );
 
-            const numberValue = parseFloat(newValue.replace(decimalSeparator, '.'));
-
             const formattedValue = formatValue({
                 ...formatValueOptions,
                 value: newValue,
             });
 
-            if (onValueChange && formatValueOnBlur) {
-                onValueChange(newValue, name, {
-                    float: numberValue,
-                    formatted: formattedValue,
-                    value: newValue,
-                });
-            }
 
             setStateValue(formattedValue);
 

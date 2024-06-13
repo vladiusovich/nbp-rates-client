@@ -21,9 +21,9 @@ const CurrencуFormField: React.FC<Props> = ({
 	onChange,
 }) => {
 	const [current, setCurrent] = useState(false);
-	const [focusValue, setFocusValue] = useState("0");
+	const [focusedValue, setFocusedValue] = useState("0");
 	const [calculatedAmount, setCalculatedAmount] = useState(0);
-	const [calculatedAmountToCall, setCalculatedAmountToCall] = useState(0);
+	const [externalAmount, setExternalAmount] = useState(0);
 
 	useEffect(() => {
 		const crossRate = calculateCrossRate(rateAtoC, rate.mid);
@@ -31,26 +31,25 @@ const CurrencуFormField: React.FC<Props> = ({
 		setCalculatedAmount(amount);
 	}, [rateAtoC, rate.mid, aToCAmount]);
 
-	// TODO: refactor and rename
-	const debouncedCall = useDebounce(() => (onChange(rate.code, calculatedAmountToCall)), 200);
+	const debouncedOnChange = useDebounce(() => (onChange(rate.code, externalAmount)), 100);
 
 	const handleOnChange = (value: string, float: number) => {
 		if (current) {
-			setFocusValue(value)
+			setFocusedValue(value)
 		}
 
-		setCalculatedAmountToCall(float);
-		debouncedCall();
+		setExternalAmount(float);
+		debouncedOnChange();
 	};
 
 	const handleOnFocus = () => {
 		setCurrent(true);
-		setFocusValue(calculatedAmount.toString())
+		setFocusedValue(calculatedAmount.toString())
 	};
 
 	const handleOnBlur = () => (setCurrent(false));
 
-	const amount = current ? focusValue : calculatedAmount;
+	const amount = current ? focusedValue : calculatedAmount;
 
 	return (
 		<UI.Stack direction="column" gap={12}>
